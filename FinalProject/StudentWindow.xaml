@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinalProject"
         mc:Ignorable="d"
-        Title="StudentWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Student" Height="450" Width="800">
+    <Grid Background="AliceBlue">
+        <Label Name="StudentExamLBL" Content="Exam Name:" HorizontalAlignment="Left" Margin="284,125,0,279"/>
+        <TextBox Name="StudentExamTXT" HorizontalAlignment="Left" Margin="365,125,0,0" VerticalAlignment="Top" Width="204" Height="27"/>
+        <Button Name="EnterExam" Content="Enter Exam" HorizontalAlignment="Left" Margin="380,187,0,0" VerticalAlignment="Top" Width="87" Click="EnterExam_Click" Height="30" />
+        <Label Content="Welcome {add name variable}" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top" FontSize="25"/>
     </Grid>
 </Window>

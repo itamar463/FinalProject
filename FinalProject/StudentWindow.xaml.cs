@@ -23,5 +23,10 @@ namespace FinalProject
         {
             InitializeComponent();
         }
+
+        private void EnterExam_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
