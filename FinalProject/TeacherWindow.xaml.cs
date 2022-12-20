@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FinalProject
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TeacherWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TeacherWindow : Window
     {
-        public MainWindow()
+        public TeacherWindow()
         {
             InitializeComponent();
-        }
-
-        private void loginBtn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

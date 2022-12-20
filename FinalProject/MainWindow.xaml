@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:FinalProject"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Height="434" VerticalAlignment="Bottom" Background="AliceBlue">
+        <TextBlock Height="42" HorizontalAlignment="Center" Margin="0,30,0,0" Name="LoginHeading" Text="Welcome" VerticalAlignment="Top" FontSize="22" FontStretch="ExtraCondensed"/>
 
+        <TextBlock Height="23" FontSize="15" HorizontalAlignment="Left" Margin="220,115,0,0" Name="textBlock1" Text="Name" VerticalAlignment="Top" Width="60" />
+        <TextBlock Height="23" FontSize="15" HorizontalAlignment="Left" Margin="220,168,0,0" Name="textBlock2" Text="Id" VerticalAlignment="Top" Width="47" />
+        <TextBox Height="23" HorizontalAlignment="Center" Margin="0,115,0,0" Name="textBoxName" VerticalAlignment="Top" Width="247" />
+        <TextBox Height="23" HorizontalAlignment="Center" Margin="0,168,0,0" Name="textBoxId" VerticalAlignment="Top" Width="247" />
+        <Button Content="Login" FontSize="15" Height="23" HorizontalAlignment="Center" Margin="0,211,0,0" Name="loginBtn" VerticalAlignment="Top" Width="104" Click="loginBtn_Click"  />
+        <TextBlock Height="23" HorizontalAlignment="Left" x:Name ="errormessage" VerticalAlignment="Top" Width="247" Margin="118,253,0,0"  OpacityMask="Crimson" Foreground="#FFE5572C"  />
     </Grid>
 </Window>
