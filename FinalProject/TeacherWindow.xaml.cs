@@ -23,5 +23,20 @@ namespace FinalProject
         {
             InitializeComponent();
         }
+
+        private void SearchExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpdateExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

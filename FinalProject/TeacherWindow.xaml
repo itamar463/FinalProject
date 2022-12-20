@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="TeacherWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Label  Grid.Column="0" Background="LightBlue" Content="Hello {enter teacher name var}" FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <StackPanel Grid.Row="1" Background="AliceBlue">
+            <Label Content="Choose Exam: "></Label>
+            <ComboBox Name="ExamsCombo" Margin="2 0 3 0"></ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Background="AliceBlue">
+            <Button Name="UpdateExamBTN" Margin="8,6,8,8" Content="Update Exam" FontSize="25" Click="UpdateExamBTN_Click" />
+            <Button Name="AddExamBTN" Margin="8,0,8,8" Content="Add Exam" FontSize="25" Click="AddExamBTN_Click" />
+        </StackPanel>
+        <!-- TODO: Add statistics of the chosen exam on column 1-->
     </Grid>
 </Window>
