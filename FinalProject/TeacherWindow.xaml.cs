@@ -24,19 +24,25 @@ namespace FinalProject
             InitializeComponent();
         }
 
-        private void SearchExamBTN_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+            
         private void UpdateExamBTN_Click(object sender, RoutedEventArgs e)
         {
-
+            //update exam button
         }
 
         private void AddExamBTN_Click(object sender, RoutedEventArgs e)
         {
+            //add exam button
+        }
 
+        private void RemoveExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+            //remove exam button
+        }
+
+        private void ExamsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //combo bex for teacher to choose one of her exams
         }
     }
 }

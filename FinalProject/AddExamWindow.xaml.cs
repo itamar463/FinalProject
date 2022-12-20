@@ -23,5 +23,60 @@ namespace FinalProject
         {
             InitializeComponent();
         }
+
+        private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // remove qeustion btn
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // add wuestion btn
+        }
+
+        private void QuestionsLST_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // questions listbox
+        }
+
+        private void RandomizeQuestions_Click(object sender, RoutedEventArgs e)
+        {
+            // rand the questions btn
+        }
+
+        private void UploadExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+            // upload exam to db btn
+        }
+
+        private void SaveExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+            // save exam localy btn
+        }
+
+        private void IsCorrectAnswer1_Checked(object sender, RoutedEventArgs e)
+        {
+            // if answer 1 is the correct answer checkbox
+        }
+
+        private void IsCorrectAnswer2_Checked(object sender, RoutedEventArgs e)
+        {
+            // if answer 2 is the correct answer checkbox
+        }
+
+        private void IsCorrectAnswer3_Checked(object sender, RoutedEventArgs e)
+        {
+            // if answer 3 is the correct answer checkbox
+        }
+
+        private void IsCorrectAnswer4_Checked(object sender, RoutedEventArgs e)
+        {
+            // if answer 4 is the correct answer checkbox
+        }
+
+        private void IsImageQuestion_Checked(object sender, RoutedEventArgs e)
+        {
+            // if question is image btn
+        }
     }
 }

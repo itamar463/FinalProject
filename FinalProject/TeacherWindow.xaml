@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="275"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,11 +19,12 @@
         <Label  Grid.Column="0" Background="LightBlue" Content="Hello {enter teacher name var}" FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Row="1" Background="AliceBlue">
             <Label Content="Choose Exam: "></Label>
-            <ComboBox Name="ExamsCombo" Margin="2 0 3 0"></ComboBox>
+            <ComboBox Name="ExamsCombo" Margin="2 0 3 0" SelectionChanged="ExamsCombo_SelectionChanged"></ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="2" Background="AliceBlue">
-            <Button Name="UpdateExamBTN" Margin="8,6,8,8" Content="Update Exam" FontSize="25" Click="UpdateExamBTN_Click" />
-            <Button Name="AddExamBTN" Margin="8,0,8,8" Content="Add Exam" FontSize="25" Click="AddExamBTN_Click" />
+            <Button Name="UpdateExamBTN" Margin="8,6,8,8" Content="Update Exam" FontSize="20" Click="UpdateExamBTN_Click" />
+            <Button Name="AddExamBTN" Margin="8,0,8,8" Content="Add Exam" FontSize="20" Click="AddExamBTN_Click" />
+            <Button Name="RemoveExamBTN" Margin="8,0,8,8" Content="Remove Exam" FontSize="20" Click="RemoveExamBTN_Click" />
         </StackPanel>
         <!-- TODO: Add statistics of the chosen exam on column 1-->
     </Grid>

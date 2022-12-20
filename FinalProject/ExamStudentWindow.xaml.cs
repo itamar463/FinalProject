@@ -23,5 +23,25 @@ namespace FinalProject
         {
             InitializeComponent();
         }
+
+        private void FinishExamBTN_Click(object sender, RoutedEventArgs e)
+        {
+            //submit exam btn
+        }
+
+        private void PrevBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //prev qustion btn
+        }
+
+        private void NextBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //next qustion btn
+        }
+
+        private void QuestionsLST_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // questions list box
+        }
     }
 }
