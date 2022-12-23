@@ -9,7 +9,10 @@ namespace FinalProject.Objects
     internal class Student : Person
     {
         //student class heritad from Person
-        
+        public Student() : this("", -1, "")
+        {
+
+        }
         public Student(string name, int age, string fac) : base(name, age, fac)
         {
             
