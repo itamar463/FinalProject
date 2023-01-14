@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProject.Objects
+namespace FinalProject.Demos.Objects
 {
     internal class Exam
     {
@@ -19,7 +19,7 @@ namespace FinalProject.Objects
         private float Grade { get; set; }
 
 
-        public Exam() : this("","", DateTime.Now,DateTime.Now,new Teacher(),-1,false,new List<Question>(),-1)
+        public Exam() : this("", "", DateTime.Now, DateTime.Now, new Teacher(), -1, false, new List<Question>(), -1)
         {
 
         }
@@ -41,7 +41,7 @@ namespace FinalProject.Objects
             {
                 Random rand = new Random();
                 var shuffled = Questions.OrderBy(_ => rand.Next()).ToList();
-                this.Questions = shuffled;
+                Questions = shuffled;
             }
         }
     }

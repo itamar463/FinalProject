@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FinalProject
+namespace FinalProject.Demos
 {
     /// <summary>
     /// Interaction logic for ExamStudentWindow.xaml

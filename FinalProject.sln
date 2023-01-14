@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject", "FinalProject\FinalProject.csproj", "{EE5EF5E3-2A28-45AB-B843-E67CCFDA6A31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.Demos", "FinalProject\FinalProject.Demos.csproj", "{EE5EF5E3-2A28-45AB-B843-E67CCFDA6A31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalProject.Server.API", "FinalProject.Server.API\FinalProject.Server.API.csproj", "{89F05C50-B647-4578-9FDA-B716F7CAB74B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.Server.API", "FinalProject.Server.API\FinalProject.Server.API.csproj", "{89F05C50-B647-4578-9FDA-B716F7CAB74B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

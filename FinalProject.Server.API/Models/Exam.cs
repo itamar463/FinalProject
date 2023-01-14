@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
-    internal class Exam
+    public class Exam
     {
         private string Name { get; set; }
         private string Id { get; set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinalProject.Server.API.Models;
+using FinalProject.Server.API.Controllers;
 
 namespace FinalProject.Server.API.Repositories
 {
@@ -38,11 +39,12 @@ namespace FinalProject.Server.API.Repositories
 
         public void AddPerson(Person person)
         {
-            Student? st = (Student)person;
-            if(st != null)
+            if (person is Student)
             {
-                this._students.Add(st);
+                Student student = (Student)person;
+                this._students.Add(student);
             }
+
         }
 
 

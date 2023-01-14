@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProject.Objects
+namespace FinalProject.Demos.Objects
 {
-    internal class TeachersRepository : IPersonsReposetory
+    public class TeachersRepository : IPersonsReposetory
     {
         //data handling for students need to see how it works with db and so on...
         List<Teacher> teachers;
@@ -15,6 +15,9 @@ namespace FinalProject.Objects
         {
             teachers = new List<Teacher>();
         }
+
+        //Person[] IPersonsReposetory.Persons => throw new NotImplementedException(); // need to change
+
         public void AddPerson(Person person)
         {
             //maybe to do with sql and db ?

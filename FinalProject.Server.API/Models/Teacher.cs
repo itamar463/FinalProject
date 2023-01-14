@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
-    internal class Teacher : Person
+    public class Teacher : Person
     {
         //Teacher class harited from Person
         private List<Exam> exams; //hold his own exams as well need to see if to save here or on db

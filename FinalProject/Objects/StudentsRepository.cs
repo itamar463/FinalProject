@@ -1,33 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace FinalProject.Objects
+namespace FinalProject.Demos.Objects
 {
-    internal class StudentsRepository : IPersonsReposetory
+    public class StudentsRepository : IPersonsReposetory
     {
         //data handling for students need to see how it works with db and so on...
-        private List<Student> students;
+        private List<Student> _students;
+        static private StudentsRepository _instance = null;
+        HttpClient clientApi;
 
-        public StudentsRepository()
+        //01 change to private
+        private StudentsRepository()
         {
-            students = new List<Student>();
+            _students = new List<Student>();
+            clientApi = new HttpClient();
+            clientApi.BaseAddress = new Uri("https://localhost:7277");
         }
+
+        //03 Get Factory Of StudentsRepository  as singelton
+
+        public static StudentsRepository Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new StudentsRepository();
+
+                }
+                return _instance;
+            }
+        }
+        public List<Student> GetStudents()
+        {
+            var response = clientApi?.GetAsync("api/student").Result;
+            //  response.EnsureSuccessStatusCode();
+            string? dataString = response?.Content.ReadAsStringAsync().Result;
+            var load_students = JsonSerializer.Deserialize<List<Student>>(dataString);
+            return load_students;
+        }
+        public Student[] Students
+        {
+            get
+            {
+                var st = GetStudents();
+
+
+                return st.ToArray();
+            }
+
+        }
+       // Person[] IPersonsReposetory.Persons => _students.ToArray();
+
         public void AddPerson(Person person)
         {
-           //maybe to do with sql and db ?
+            if (person is Student)
+            {
+                Student student = (Student)person;
+                this._students.Add(student);
+            }
+
         }
 
-        public Person[] Persons() 
-        {
-             return students.ToArray(); 
-        }
 
         public void RemovePerson(string id)
         {
-            //maybe to do with sql and db ?
+            int indexFound = this._students.FindIndex(s => s.Id == id);
+            if (indexFound >= 0)
+            {
+                this._students.RemoveAt(indexFound);
+            }
         }
 
         public void SearchExamByName(string examName)
@@ -37,7 +85,13 @@ namespace FinalProject.Objects
 
         public void UpdatePerson(Person person)
         {
-            //maybe to do with sql and db ?
+            Student st = (Student)person;
+            int indexFound = this._students.FindIndex(s => s.Id == st.Id);
+            if (indexFound >= 0)
+            {
+                this._students[indexFound] = st;
+
+            }
         }
     }
 }

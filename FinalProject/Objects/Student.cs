@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProject.Objects
+namespace FinalProject.Demos.Objects
 {
-    internal class Student : Person
+    public class Student : Person
     {
         //student class heritad from Person
-        public Student() : this("", -1, "",false)
+        public Student() : this("", -1, "", false)
         {
 
         }
-        public Student(string name, int age, string fac,bool whoAmI) : base(name, age, fac, whoAmI)
+        public Student(string name, int age, string fac, bool whoAmI) : base(name, age, fac, whoAmI)
         {
-            
+
         }
 
-        
+
     }
 }

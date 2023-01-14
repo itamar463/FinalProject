@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProject.Objects
+namespace FinalProject.Demos.Objects
 {
-    internal class Question
+    public class Question
     {
         private bool IsImage { get; set; }
         private string QuestionContent { get; set; }
-        private Dictionary<string,bool> Answers { get; set; }
+        private Dictionary<string, bool> Answers { get; set; }
         private float Weight { get; set; }
 
 
-        public Question() : this(false, "", new Dictionary<string, bool>(),-1)
+        public Question() : this(false, "", new Dictionary<string, bool>(), -1)
         {
 
         }

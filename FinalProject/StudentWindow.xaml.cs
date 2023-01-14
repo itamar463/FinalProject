@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProject.Demos.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +13,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FinalProject
+namespace FinalProject.Demos
 {
     /// <summary>
     /// Interaction logic for StudentWindow.xaml
     /// </summary>
     public partial class StudentWindow : Window
     {
+        StudentsRepository repo;
         public StudentWindow()
         {
             InitializeComponent();
+        }
+        public StudentWindow(StudentsRepository repo)
+        {
+            InitializeComponent();
+            this.repo = repo;
         }
 
         private void EnterExam_Click(object sender, RoutedEventArgs e)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
-    internal class Question
+    public class Question
     {
         private bool IsImage { get; set; }
         private string QuestionContent { get; set; }

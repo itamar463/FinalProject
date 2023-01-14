@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
-    internal class Student : Person
+    public class Student : Person
     {
         //student class heritad from Person
         public Student() : this("", -1, "",false)

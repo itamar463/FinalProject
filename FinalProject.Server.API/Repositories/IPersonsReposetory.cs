@@ -7,7 +7,7 @@ using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Repositories
 {
-    internal interface IPersonsReposetory
+    public interface IPersonsReposetory
     {
         //interface for funcationality, basic for student and teacher as well
         void AddPerson(Person person);
