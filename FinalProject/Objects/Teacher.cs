@@ -9,7 +9,7 @@ namespace FinalProject.Demos.Objects
     public class Teacher : Person
     {
         //Teacher class harited from Person
-        private List<Exam> exams; //hold his own exams as well need to see if to save here or on db
+        private List<Exam> Exams { get; set; } //hold his own exams as well need to see if to save here or on db
 
         public Teacher() : this("", -1, "", true)
         {
@@ -17,7 +17,7 @@ namespace FinalProject.Demos.Objects
         }
         public Teacher(string name, int age, string fac, bool whoAmI) : base(name, age, fac, whoAmI)
         {
-            exams = new List<Exam>();
+            Exams = new List<Exam>();
         }
 
 

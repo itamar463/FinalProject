@@ -21,14 +21,18 @@ namespace FinalProject.Demos
     public partial class StudentWindow : Window
     {
         StudentsRepository repo;
+
+        Student stud;
         public StudentWindow()
         {
             InitializeComponent();
         }
-        public StudentWindow(StudentsRepository repo)
+        public StudentWindow(StudentsRepository repo, Student s)
         {
             InitializeComponent();
             this.repo = repo;
+            this.stud = s;
+            StudentLbl.Content += stud.Name;
         }
 
         private void EnterExam_Click(object sender, RoutedEventArgs e)

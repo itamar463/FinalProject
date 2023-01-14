@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="Student" Height="450" Width="800">
     <Grid Background="AliceBlue">
-        <Label Name="StudentExamLBL" Content="Exam Name:" HorizontalAlignment="Left" Margin="284,125,0,279"/>
-        <TextBox Name="StudentExamTXT" HorizontalAlignment="Left" Margin="365,125,0,0" VerticalAlignment="Top" Width="204" Height="27"/>
-        <Button Name="EnterExam" Content="Enter Exam" HorizontalAlignment="Left" Margin="380,187,0,0" VerticalAlignment="Top" Width="87" Click="EnterExam_Click" Height="30" />
-        <Label Content="Welcome {add name variable}" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top" FontSize="25"/>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Enter exam name " HorizontalAlignment="Center" VerticalAlignment="Top" Margin="200,125,0,0" FontSize="15"/>
+            <TextBox Name="StudentExamTXT" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="204" Height="27"/>
+        </StackPanel>
+        <Button Name="EnterExam" Content="Enter Exam" HorizontalAlignment="Left" Margin="400,0,0,0" VerticalAlignment="Center" Width="87" Click="EnterExam_Click" Height="30" />
+        <Label Name="StudentLbl" Content="Welcome " HorizontalAlignment="Left" Margin="200,56,0,0" VerticalAlignment="Top" FontSize="25"/>
     </Grid>
 </Window>

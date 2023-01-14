@@ -56,7 +56,7 @@ namespace FinalProject.Demos.Objects
             }
 
         }
-       // Person[] IPersonsReposetory.Persons => _students.ToArray();
+       
 
         public void AddPerson(Person person)
         {

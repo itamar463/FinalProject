@@ -31,7 +31,7 @@ namespace FinalProject.Demos.Objects
 
             }
         }
-        private bool? IsTeacher;
+        public bool IsTeacher { get; set; }
         public Person() : this("", -1, "", false)
         {
 

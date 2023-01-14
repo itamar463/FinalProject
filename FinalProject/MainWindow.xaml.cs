@@ -39,15 +39,26 @@ namespace FinalProject.Demos
 
             if (name != null && id != null)
             {
-                StudentsRepository p = StudentsRepository.Instance;
-                Student s1 = p.Students.FirstOrDefault();
-                Student? student = p.Students.Where(s => s.Id == id).SingleOrDefault();
+                StudentsRepository studentRepo = StudentsRepository.Instance;
+                TeachersRepository teacherRepo = TeachersRepository.Instance;
+                Student? student = studentRepo.Students.Where(s => s.Id == id).SingleOrDefault();
+                Teacher? teacher = teacherRepo.Teachers.Where(t => t.Id == id).SingleOrDefault();
+
+                //now its only for check need to identify by name and password
                 if (student != null)
                 {
-                    StudentWindow s = new StudentWindow(StudentsRepository.Instance);
+                    StudentWindow s = new StudentWindow(studentRepo, student);
                     s.Show();
                 }
-                //theacher need to be added
+                else if(teacher != null)
+                {
+                    TeacherWindow t = new TeacherWindow(teacherRepo,teacher);
+                    t.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Didn't find user!!!");
+                }
             }
 
         }

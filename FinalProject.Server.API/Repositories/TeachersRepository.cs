@@ -9,25 +9,51 @@ namespace FinalProject.Server.API.Repositories
 {
     internal class TeachersRepository : IPersonsReposetory
     {
-        //data handling for students need to see how it works with db and so on...
+        
         List<Teacher> teachers;
+        static private TeachersRepository _instance = null;
 
-        public TeachersRepository()
+        //01 change to private
+        private TeachersRepository()
         {
             teachers = new List<Teacher>();
         }
+
+        //03 Get Factory Of TeachersRepository  as singelton
+
+        public static TeachersRepository Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new TeachersRepository();
+
+                }
+                return _instance;
+            }
+        }
+
 
         Person[] IPersonsReposetory.Persons => teachers.ToArray();
 
 
         public void AddPerson(Person person)
         {
-            //maybe to do with sql and db ?
+            if (person is Teacher)
+            {
+
+                teachers.Add((Teacher)person);
+            }
         }
 
         public void RemovePerson(string id)
         {
-            //maybe to do with sql and db ?
+            int indexFound = this.teachers.FindIndex(t => t.Id == id);
+            if (indexFound >= 0)
+            {
+                this.teachers.RemoveAt(indexFound);
+            }
         }
 
         public void SearchExamByName(string examName)
@@ -37,7 +63,13 @@ namespace FinalProject.Server.API.Repositories
 
         public void UpdatePerson(Person person)
         {
-            //maybe to do with sql and db ?
+            Teacher t = (Teacher)person;
+            int indexFound = this.teachers.FindIndex(s => s.Id == t.Id);
+            if (indexFound >= 0)
+            {
+                this.teachers[indexFound] = t;
+
+            }
         }
     }
 }

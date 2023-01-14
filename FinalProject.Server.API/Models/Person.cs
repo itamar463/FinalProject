@@ -26,7 +26,7 @@ namespace FinalProject.Server.API.Models
 
             }
         }
-        private bool? IsTeacher;
+        public bool IsTeacher { get; set; }
         public Person() : this("", -1, "",false)
         {
 

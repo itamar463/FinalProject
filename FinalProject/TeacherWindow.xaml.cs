@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProject.Demos.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,12 +20,23 @@ namespace FinalProject.Demos
     /// </summary>
     public partial class TeacherWindow : Window
     {
+        private TeachersRepository repo;
+
+        private Teacher teach;
         public TeacherWindow()
         {
             InitializeComponent();
         }
 
-            
+        public TeacherWindow(TeachersRepository repo, Teacher t)
+        {
+            InitializeComponent();
+            this.repo = repo;
+            this.teach = t;
+            Teacherlbl.Content += t.Name;
+        }
+
+
         private void UpdateExamBTN_Click(object sender, RoutedEventArgs e)
         {
             //update exam button

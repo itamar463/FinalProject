@@ -11,36 +11,85 @@ namespace FinalProject.Server.API.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
-        // GET: api/<TeacherController>
+        private IPersonsReposetory repo;
+
+        public TeacherController()
+        {
+            repo = TeachersRepository.Instance;
+            if (repo.Persons.Length == 0)
+            {
+                Teacher s1 = new Teacher("Donald", 60, "Computer Science", true);
+                Teacher s2 = new Teacher("Micky", 30, "Computer Science",true);
+                repo.AddPerson(s1);
+                repo.AddPerson(s2);
+            }
+        }
+
+        // GET: api/<StudentController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Person> Get()
         {
-            return new string[] { "value1", "value2" };
+            return this.repo.Persons;
         }
 
-        // GET api/<TeacherController>/5
+        // GET api/<StudentsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Person Get(string id)
         {
-            return "value";
+            Person? teacher = this.repo.Persons.Where(t => t.Id == id).SingleOrDefault();
+            if (teacher != null)
+                return teacher;
+            else
+                return new Teacher { Id = "-1" };
         }
 
-        // POST api/<TeacherController>
+        // POST api/<StudentsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(Teacher newTeacher)
         {
+            if (newTeacher.Id == "string")
+            {
+                newTeacher.Id = Guid.NewGuid().ToString();
+                repo.AddPerson(newTeacher);
+            }
         }
 
-        // PUT api/<TeacherController>/5
+        // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(string id, [FromBody] Teacher teacherUpdate)
         {
+            //maybe we dont need it or the other put
+            Person? teacher = this.repo.Persons.Where(t => t.Id == id).SingleOrDefault();
+            if (teacher != null)
+            {
+                repo.UpdatePerson(teacherUpdate);
+            }
         }
 
-        // DELETE api/<TeacherController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // PUT api/<StudentsController>/5
+        [HttpPut]
+        public void Put([FromBody] Teacher teacherUpdate)
         {
+            Person? teacher = this.repo.Persons.Where(s => s.Id == teacherUpdate.Id).SingleOrDefault();
+            if (teacher != null)
+            {
+                repo.UpdatePerson(teacherUpdate);
+            }
+
+
+
+
+        }
+
+        // DELETE api/<StudentsController>/5
+        [HttpDelete("{id}")]
+        public void Delete(string id)
+        {
+            Person? teacher = this.repo.Persons.Where(t => t.Id == id).SingleOrDefault();
+            if (teacher != null)
+            {
+                repo.RemovePerson(id);
+            }
         }
     }
 }
