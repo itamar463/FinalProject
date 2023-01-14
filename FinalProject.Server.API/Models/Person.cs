@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProject.Objects
+namespace FinalProject.Server.API.Models
 {
-    internal class Person 
+    public class Person 
     {
         //base class for teacher and student
         public string Name { get; set; }
