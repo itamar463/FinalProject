@@ -26,17 +26,18 @@ namespace FinalProject.Objects
 
             }
         }
-        
-        public Person() : this("", -1, "")
+        private bool? IsTeacher;
+        public Person() : this("", -1, "",false)
         {
 
         }
-        public Person(string name, int age, string fac)
+        public Person(string name, int age, string fac,bool whoAmI)
         {
             this.Name = name;
             this.Age = age;
             this.Id = Guid.NewGuid().ToString();
             this.Faculty = fac;
+            this.IsTeacher = whoAmI;
         }
 
         public override string ToString()
