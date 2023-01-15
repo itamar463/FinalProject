@@ -16,8 +16,8 @@ namespace FinalProject.Server.API.Controllers
             repo = StudentsRepository.Instance;
             if (repo.Persons.Length == 0)
             {
-                Student s1 = new Student("DonaldDuck", 60, "Computer Science", false);
-                Student s2 = new Student("MickyMouse", 30, "Computer Science", false);
+                Student s1 = new Student("DonaldDuck", 60, "Computer Science","1234", false);
+                Student s2 = new Student("MickyMouse", 30, "Computer Science","1234" ,false);
                 repo.AddPerson(s1);
                 repo.AddPerson(s2);
             }

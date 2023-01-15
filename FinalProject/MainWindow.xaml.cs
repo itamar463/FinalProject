@@ -34,15 +34,16 @@ namespace FinalProject.Demos
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
+            //verify person exist by his name and password
             string? name = textBoxName.Text;
-            string? id = textBoxId.Text;
+            string? password = textBoxPass.Password;
 
-            if (name != null && id != null)
+            if (name != "" && password != "")
             {
                 StudentsRepository studentRepo = StudentsRepository.Instance;
                 TeachersRepository teacherRepo = TeachersRepository.Instance;
-                Student? student = studentRepo.Students.Where(s => s.Id == id).SingleOrDefault();
-                Teacher? teacher = teacherRepo.Teachers.Where(t => t.Id == id).SingleOrDefault();
+                Student? student = studentRepo.Students.Where(s => (s.Password == password && s.Name == name)).SingleOrDefault();
+                Teacher? teacher = teacherRepo.Teachers.Where(t => (t.Password == password && t.Name == name)).SingleOrDefault();
 
                 //now its only for check need to identify by name and password
                 if (student != null)
@@ -57,8 +58,12 @@ namespace FinalProject.Demos
                 }
                 else
                 {
-                    MessageBox.Show("Didn't find user!!!");
+                    MessageBox.Show("Name or Password are incorrect.");
                 }
+            }
+            else
+            {
+                MessageBox.Show("One or Two of the fields is missing.");
             }
 
         }

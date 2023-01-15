@@ -18,8 +18,8 @@ namespace FinalProject.Server.API.Controllers
             repo = TeachersRepository.Instance;
             if (repo.Persons.Length == 0)
             {
-                Teacher s1 = new Teacher("Donald", 60, "Computer Science", true);
-                Teacher s2 = new Teacher("Micky", 30, "Computer Science",true);
+                Teacher s1 = new Teacher("Donald", 60, "Computer Science", "1234",true);
+                Teacher s2 = new Teacher("Micky", 30, "Computer Science", "1234",true);
                 repo.AddPerson(s1);
                 repo.AddPerson(s2);
             }
