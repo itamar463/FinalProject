@@ -88,6 +88,7 @@ namespace FinalProject.Server.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
         {
+            person.Id = Guid.NewGuid().ToString(); //adding are own id
             _context.Users.Add(person);
             await _context.SaveChangesAsync();
 

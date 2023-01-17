@@ -21,7 +21,7 @@ namespace FinalProject.Server.API.Models
         public float Totaltime { get; set; }
         public bool IsRandomize { get; set; } //maybe we don't need it?
         //public List<Question> Questions { get; set; }
-        public float Grade { get; set; }
+        public float Grade { get; set; } //maybe change to max_grade
 
 
         public Exam() : this("","", DateTime.Now,DateTime.Now,new Teacher(),-1,false,-1)

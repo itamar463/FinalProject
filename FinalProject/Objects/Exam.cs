@@ -2,21 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FinalProject.Demos.Objects
 {
     internal class Exam
     {
-        
+        [JsonPropertyName("name")]
         public string Name { get; set; }
+        [JsonPropertyName("id")]
         public string Id { get; set; }
+        [JsonPropertyName("startdate")]
         public DateTime StratDate { get; set; }
+        [JsonPropertyName("enddate")]
         public DateTime EndDate { get; set; }
+        [JsonPropertyName("teacher")]
         public Teacher Teacher { get; set; }
+        [JsonPropertyName("totaltime")]
         public float Totaltime { get; set; }
+        [JsonPropertyName("israndomize")]
         public bool IsRandomize { get; set; } //maybe we don't need it?
         public List<Question> Questions { get; set; }
+       
+        [JsonPropertyName("grade")]
         public float Grade { get; set; }
 
 
