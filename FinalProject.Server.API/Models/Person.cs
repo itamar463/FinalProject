@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
+    [Table("Users")]
     public class Person 
     {
         //base class for teacher and student
         public string Name { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
 
         public int age = -1;
@@ -36,7 +41,7 @@ namespace FinalProject.Server.API.Models
         {
             this.Name = name;
             this.Age = age;
-            this.Id = Guid.NewGuid().ToString();
+            //this.Id = Guid.NewGuid().ToString();
             this.Faculty = fac;
             this.Password = pass;
             this.IsTeacher = whoAmI;

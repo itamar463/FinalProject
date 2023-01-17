@@ -1,38 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
+    [Table("Exams")]
     public class Exam
     {
-        private string Name { get; set; }
-        private string Id { get; set; }
-        private DateTime StratDate { get; set; }
-        private DateTime EndDate { get; set; }
-        private Teacher Teacher { get; set; }
-        private float Totaltime { get; set; }
-        private bool IsRandomize { get; set; } //maybe we don't need it?
-        private List<Question> Questions { get; set; }
-        private float Grade { get; set; }
+        public string Name { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string Id { get; set; }
+        public DateTime StratDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public Teacher Teacher { get; set; }
+        public float Totaltime { get; set; }
+        public bool IsRandomize { get; set; } //maybe we don't need it?
+        //public List<Question> Questions { get; set; }
+        public float Grade { get; set; }
 
 
-        public Exam() : this("","", DateTime.Now,DateTime.Now,new Teacher(),-1,false,new List<Question>(),-1)
+        public Exam() : this("","", DateTime.Now,DateTime.Now,new Teacher(),-1,false,-1)
         {
 
         }
-        public Exam(string name, string id, DateTime stratDate, DateTime endDate, Teacher teacher, float totaltime, bool isRandomize, List<Question> questions, float grade)
+        public Exam(string name, string id, DateTime stratDate, DateTime endDate, Teacher teacher, float totaltime, bool isRandomize, float grade)
         {
             Name = name;
-            Id = Guid.NewGuid().ToString(); ;
+           // Id = Guid.NewGuid().ToString(); ;
             StratDate = stratDate;
             EndDate = endDate;
             Teacher = teacher;
             Totaltime = totaltime;
             IsRandomize = isRandomize;
-            Questions = questions;
+            //Questions = questions;
             Grade = grade;
         }
         public void mixQuestions()
@@ -40,8 +45,8 @@ namespace FinalProject.Server.API.Models
             if (IsRandomize)
             {
                 Random rand = new Random();
-                var shuffled = Questions.OrderBy(_ => rand.Next()).ToList();
-                this.Questions = shuffled;
+                //var shuffled = Questions.OrderBy(_ => rand.Next()).ToList();
+                //this.Questions = shuffled;
             }
         }
     }

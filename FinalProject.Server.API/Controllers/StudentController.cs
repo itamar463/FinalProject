@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FinalProject.Server.API.Repositories;
 using FinalProject.Server.API.Models;
+using FinalProject.Server.API.Context;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,8 +12,9 @@ namespace FinalProject.Server.API.Controllers
     public class StudentController : ControllerBase
     {
         private IPersonsReposetory repo;
-
-        public StudentController() {
+        private UsersContext _usersContext;
+        public StudentController(UsersContext usersContext) {
+            _usersContext = usersContext;
             repo = StudentsRepository.Instance;
             if (repo.Persons.Length == 0)
             {
@@ -20,6 +22,8 @@ namespace FinalProject.Server.API.Controllers
                 Student s2 = new Student("MickyMouse", 30, "Computer Science","1234" ,false);
                 repo.AddPerson(s1);
                 repo.AddPerson(s2);
+                _usersContext.Users.Add(s1);
+                _usersContext.Users.Add(s2);
             }
         }
 
@@ -27,29 +31,32 @@ namespace FinalProject.Server.API.Controllers
         [HttpGet]
         public IEnumerable<Person> Get()
         {
-            return this.repo.Persons;
+            //return this.repo.Persons;
+            return _usersContext.Users;
         }
 
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
         public Person Get(string id)
         {
-            Person? student = this.repo.Persons.Where(s => s.Id == id).SingleOrDefault();
-            if (student != null)
-                return student;
-            else
-                return new Student { Id = "-1" };
+            //Person? student = this.repo.Persons.Where(s => s.Id == id).SingleOrDefault();
+            //if (student != null)
+            //    return student;
+            //else
+            //    return new Student { Id = "-1" };
+            return _usersContext.Users.FirstOrDefault(s => s.Id == id);
         }
 
         // POST api/<StudentsController>
         [HttpPost]
         public void Post(Student newStudent)
         {
-            if (newStudent.Id == "string")
-            {
-                newStudent.Id = Guid.NewGuid().ToString();
-                repo.AddPerson(newStudent);
-            }
+            //if (newStudent.Id == "string")
+            //{
+            //    newStudent.Id = Guid.NewGuid().ToString();
+            //    repo.AddPerson(newStudent);
+            //}
+            _usersContext.Users.Add(newStudent);
         }
 
         // PUT api/<StudentsController>/5
@@ -57,10 +64,16 @@ namespace FinalProject.Server.API.Controllers
         public void Put(string id, [FromBody] Student studentUpdate)
         {
             //maybe we dont need it or the other put
-            Person? student = this.repo.Persons.Where(s => s.Id == id).SingleOrDefault();
-            if (student != null)
+            //Person? student = this.repo.Persons.Where(s => s.Id == id).SingleOrDefault();
+            //if (student != null)
+            //{
+            //    repo.UpdatePerson(studentUpdate);
+            //}
+            var user = _usersContext.Users.FirstOrDefault(s => s.Id == id);
+            if (user != null)
             {
-                repo.UpdatePerson(studentUpdate);
+                _usersContext.Entry<Person>(user).CurrentValues.SetValues(studentUpdate);
+                _usersContext.SaveChanges();
             }
         }
 
@@ -68,11 +81,17 @@ namespace FinalProject.Server.API.Controllers
         [HttpPut]
         public void Put([FromBody] Student studentUpdate)
         {
-            Person? student = this.repo.Persons.Where(s => s.Id == studentUpdate.Id).SingleOrDefault();
-            if (student != null)
+            var user = _usersContext.Users.FirstOrDefault(s => s.Id == studentUpdate.Id);
+            if (user != null)
             {
-                repo.UpdatePerson(studentUpdate);
+                _usersContext.Entry<Person>(user).CurrentValues.SetValues(studentUpdate);
+                _usersContext.SaveChanges();
             }
+            //Person? student = this.repo.Persons.Where(s => s.Id == studentUpdate.Id).SingleOrDefault();
+            //if (student != null)
+            //{
+            //    repo.UpdatePerson(studentUpdate);
+            //}
 
 
 
@@ -83,10 +102,16 @@ namespace FinalProject.Server.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(string id)
         {
-            Person? student = this.repo.Persons.Where(s => s.Id == id).SingleOrDefault();
+            //Person? student = this.repo.Persons.Where(s => s.Id == id).SingleOrDefault();
+            //if (student != null)
+            //{
+            //    repo.RemovePerson(id);
+            //}
+            var student = _usersContext.Users.FirstOrDefault(s => s.Id == id);
             if (student != null)
             {
-                repo.RemovePerson(id);
+                _usersContext.Users.Remove(student);
+                _usersContext.SaveChanges();
             }
         }
     }

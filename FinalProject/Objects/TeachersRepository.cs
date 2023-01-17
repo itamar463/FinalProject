@@ -47,7 +47,7 @@ namespace FinalProject.Demos.Objects
 
         public List<Teacher> GetTeachers()
         {
-            var response = clientApi?.GetAsync("api/teacher").Result;
+            var response = clientApi?.GetAsync("api/users").Result;
             //  response.EnsureSuccessStatusCode();
             string? dataString = response?.Content.ReadAsStringAsync().Result;
             var load_teachers = JsonSerializer.Deserialize<List<Teacher>>(dataString);

@@ -8,15 +8,16 @@ namespace FinalProject.Demos.Objects
 {
     internal class Exam
     {
-        private string Name { get; set; }
-        private string Id { get; set; }
-        private DateTime StratDate { get; set; }
-        private DateTime EndDate { get; set; }
-        private Teacher Teacher { get; set; }
-        private float Totaltime { get; set; }
-        private bool IsRandomize { get; set; } //maybe we don't need it?
-        private List<Question> Questions { get; set; }
-        private float Grade { get; set; }
+        
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public DateTime StratDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public Teacher Teacher { get; set; }
+        public float Totaltime { get; set; }
+        public bool IsRandomize { get; set; } //maybe we don't need it?
+        public List<Question> Questions { get; set; }
+        public float Grade { get; set; }
 
 
         public Exam() : this("", "", DateTime.Now, DateTime.Now, new Teacher(), -1, false, new List<Question>(), -1)
