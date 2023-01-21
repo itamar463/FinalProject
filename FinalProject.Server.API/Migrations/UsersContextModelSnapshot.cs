@@ -29,7 +29,7 @@ namespace FinalProject.Server.API.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<float>("Grade")
                         .HasColumnType("real");
@@ -42,7 +42,7 @@ namespace FinalProject.Server.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StratDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("TeacherId")
                         .IsRequired()

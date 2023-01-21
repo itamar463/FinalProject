@@ -17,13 +17,13 @@ namespace FinalProject.Demos.Objects
         public DateTime StratDate { get; set; }
         [JsonPropertyName("endDate")]
         public DateTime EndDate { get; set; }
-        [JsonPropertyName("teacher")]
-        public Teacher Teacher { get; set; }
+        [JsonPropertyName("teacherId")]
+        public string TeacherId { get; set; }
         [JsonPropertyName("totalTime")]
         public float Totaltime { get; set; }
         [JsonPropertyName("isRandomize")]
         public bool IsRandomize { get; set; } //maybe we don't need it?
-        public List<Question> Questions { get; set; }
+        
        
         [JsonPropertyName("grade")]
         public float Grade { get; set; }
@@ -39,20 +39,14 @@ namespace FinalProject.Demos.Objects
             Id = Guid.NewGuid().ToString(); ;
             StratDate = stratDate;
             EndDate = endDate;
-            Teacher = teacher;
+            TeacherId = teacher.Id;
             Totaltime = totaltime;
             IsRandomize = isRandomize;
-            Questions = questions;
             Grade = grade;
         }
         public void mixQuestions()
         {
-            if (IsRandomize)
-            {
-                Random rand = new Random();
-                var shuffled = Questions.OrderBy(_ => rand.Next()).ToList();
-                Questions = shuffled;
-            }
+            
         }
     }
 }

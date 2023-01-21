@@ -47,7 +47,7 @@ namespace FinalProject.Demos
             InitializeComponent();
             _questions = new List<Question>();
             this.exam = exam;
-            helloLbl.Content += exam.Teacher.Name;
+            helloLbl.Content += exam.Name;
             client = new HttpClient();
     }
 
@@ -110,8 +110,12 @@ namespace FinalProject.Demos
             }
             else pointToGrade += question.Weight;
             //to activate
-            //if(pointToGrade > exam.Grade) MessageBox.Show("To many points for the exam.");
-
+            if (pointToGrade > exam.Grade)
+            {
+                MessageBox.Show("To many points for the exam.");
+                return;
+            }
+            //need to get to the grade himself
             question.IsImage = (bool)IsImageQuestion.IsChecked; //need to hendle some point
 
             if ((bool)IsCorrectAnswer1.IsChecked)
@@ -253,6 +257,7 @@ namespace FinalProject.Demos
         
         private async void SaveQtBTN_Click(object sender, RoutedEventArgs e)
         {
+            
             foreach (var item in _questions)
             {
                 var json = JsonConvert.SerializeObject(item);
@@ -266,6 +271,7 @@ namespace FinalProject.Demos
                 }
 
             }
+            // need to close window
         }
 
         private void IsImageQuestion_Checked(object sender, RoutedEventArgs e)

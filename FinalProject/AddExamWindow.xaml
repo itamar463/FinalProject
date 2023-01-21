@@ -14,7 +14,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="helloLbl" Grid.Column="0" Background="LightBlue" Content="Hello " FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <Label Name="helloLbl" Grid.Column="0" Background="LightBlue" Content="" FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Row="1" Background="AliceBlue">
             <ListBox Name="QuestionsLST" Height="356" SelectionChanged="QuestionsLST_SelectionChanged"/>
             <Button Name="SaveQtBTN" Content="Save Questions" Click="SaveQtBTN_Click"></Button>

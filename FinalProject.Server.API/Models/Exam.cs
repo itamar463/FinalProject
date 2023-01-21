@@ -17,7 +17,7 @@ namespace FinalProject.Server.API.Models
         public string Id { get; set; }
         public DateTime StratDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Teacher Teacher { get; set; }
+        public string TeacherId { get; set; }
         public float Totaltime { get; set; }
         public bool IsRandomize { get; set; } //maybe we don't need it?
         //public List<Question> Questions { get; set; }
@@ -34,7 +34,7 @@ namespace FinalProject.Server.API.Models
            // Id = Guid.NewGuid().ToString(); ;
             StratDate = stratDate;
             EndDate = endDate;
-            Teacher = teacher;
+            TeacherId = teacher.Id;
             Totaltime = totaltime;
             IsRandomize = isRandomize;
             //Questions = questions;
