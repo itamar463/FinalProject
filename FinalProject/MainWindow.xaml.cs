@@ -42,8 +42,8 @@ namespace FinalProject.Demos
             {
                 StudentsRepository studentRepo = StudentsRepository.Instance;
                 TeachersRepository teacherRepo = TeachersRepository.Instance;
-                Student? student = studentRepo.Students.Where(s => (s.Password == password && s.Name == name)).SingleOrDefault();
-                Teacher? teacher = teacherRepo.Teachers.Where(t => (t.Password == password && t.Name == name)).SingleOrDefault();
+                Student student = studentRepo.Students.Where(s => (s.Password == password && s.Name == name)).SingleOrDefault();
+                Teacher teacher = teacherRepo.Teachers.Where(t => (t.Password == password && t.Name == name)).SingleOrDefault();
 
                 //now its only for check need to identify by name and password
                 if (student != null)

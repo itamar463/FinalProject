@@ -33,6 +33,7 @@ namespace FinalProject.Demos.Objects
 
             }
         }
+        [JsonPropertyName("isTeacher")]
         public bool IsTeacher { get; set; }
         public Person() : this("", -1, "", "", false)
         {

@@ -44,7 +44,10 @@ namespace FinalProject.Demos
 
         private void AddExamBTN_Click(object sender, RoutedEventArgs e)
         {
-            //add exam button
+            //add exam name
+            ExamDetailsWindow w = new ExamDetailsWindow(teach);
+            //AddExamWindow w = new AddExamWindow(new Exam());
+            w.Show();
         }
 
         private void RemoveExamBTN_Click(object sender, RoutedEventArgs e)

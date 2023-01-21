@@ -50,7 +50,22 @@ namespace FinalProject.Demos.Objects
             var response = clientApi?.GetAsync("api/users").Result;
             //  response.EnsureSuccessStatusCode();
             string? dataString = response?.Content.ReadAsStringAsync().Result;
-            var load_teachers = JsonSerializer.Deserialize<List<Teacher>>(dataString);
+            List<Person>? persons = JsonSerializer.Deserialize<List<Person>>(dataString);
+            List<Teacher> load_teachers = new List<Teacher>();
+            foreach (var p in persons)
+            {
+                if (p.IsTeacher)
+                {
+                    Teacher t = new Teacher();
+                    t.Age = p.Age;
+                    t.IsTeacher = p.IsTeacher;
+                    t.Faculty = p.Faculty;
+                    t.Id = p.Id;
+                    t.Name = p.Name;
+                    t.Password = p.Password;
+                    load_teachers.Add(t);
+                }
+            }
             return load_teachers;
         }
         public Teacher[] Teachers

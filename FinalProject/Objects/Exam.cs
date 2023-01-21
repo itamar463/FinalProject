@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Demos.Objects
 {
-    internal class Exam
+    public class Exam
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
         [JsonPropertyName("id")]
         public string Id { get; set; }
-        [JsonPropertyName("startdate")]
+        [JsonPropertyName("startDate")]
         public DateTime StratDate { get; set; }
-        [JsonPropertyName("enddate")]
+        [JsonPropertyName("endDate")]
         public DateTime EndDate { get; set; }
         [JsonPropertyName("teacher")]
         public Teacher Teacher { get; set; }
-        [JsonPropertyName("totaltime")]
+        [JsonPropertyName("totalTime")]
         public float Totaltime { get; set; }
-        [JsonPropertyName("israndomize")]
+        [JsonPropertyName("isRandomize")]
         public bool IsRandomize { get; set; } //maybe we don't need it?
         public List<Question> Questions { get; set; }
        

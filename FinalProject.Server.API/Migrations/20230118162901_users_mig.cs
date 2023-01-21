@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinalProject.Server.API.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class usersmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +15,21 @@ namespace FinalProject.Server.API.Migrations
                 name: "Questions",
                 columns: table => new
                 {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsImage = table.Column<bool>(type: "bit", nullable: false),
                     QuestionContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer4 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CorrectAnswer = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<float>(type: "real", nullable: false),
                     ExamId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuestionNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

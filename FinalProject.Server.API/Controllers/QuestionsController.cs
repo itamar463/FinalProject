@@ -51,9 +51,7 @@ namespace FinalProject.Server.API.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(question).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();

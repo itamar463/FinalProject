@@ -76,6 +76,7 @@ namespace FinalProject.Server.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsTeacher")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -97,6 +98,29 @@ namespace FinalProject.Server.API.Migrations
 
             modelBuilder.Entity("FinalProject.Server.API.Models.Question", b =>
                 {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Answer1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Answer2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Answer3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Answer4")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CorrectAnswer")
+                        .HasColumnType("int");
+
                     b.Property<string>("ExamId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,6 +137,8 @@ namespace FinalProject.Server.API.Migrations
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Questions");
                 });
