@@ -28,6 +28,8 @@ namespace FinalProject.Demos
 
         private HttpClient client;
 
+        private bool isToUpdate = false;
+
         private string url = "https://localhost:7277/api/Exams";
         public ExamDetailsWindow(Teacher t)
         {
@@ -37,7 +39,28 @@ namespace FinalProject.Demos
             client = new HttpClient();
             welcomeLbl.Content += teacher.Name;
         }
+        public ExamDetailsWindow(Teacher t,Exam exam)
+        {
+            InitializeComponent();
+            this.teacher = t;
+            this.exam = exam;
+            client = new HttpClient();
+            welcomeLbl.Content += teacher.Name;
+            isToUpdate = true;
+            ExamToUpdate();
+        }
 
+        void ExamToUpdate()
+        {
+            examNameTxt.Text = exam.Name;
+            examTimeTxt.Text = exam.Totaltime.ToString();
+            examMaxGradeTxt.Text = exam.Grade.ToString();
+            isRandomCheck.IsChecked = exam.IsRandomize;
+            DateStart.SelectedDate = exam.StratDate;
+            DateEnd.SelectedDate = exam.EndDate;
+            
+            
+        }
         private async void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             exam.Name = examNameTxt.Text;
@@ -54,7 +77,7 @@ namespace FinalProject.Demos
                 return;
             }
             exam.Grade = int.Parse(examMaxGradeTxt.Text);
-            if (exam.Grade < 10)
+            if (exam.Grade < 10 || exam.Grade > 200)
             {
                 MessageBox.Show("Exam need to have 10 in max grade.");
                 return;
@@ -70,16 +93,31 @@ namespace FinalProject.Demos
                 MessageBox.Show("Choose dates to activate exam.");
                 return;
             }
-
             var json = JsonConvert.SerializeObject(exam);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(url, data);
-            var result = response.IsSuccessStatusCode;
-            if (!result)
+
+            if (!isToUpdate)
             {
-                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-                return;
+                var response = await client.PostAsync(url, data);
+                var result = response.IsSuccessStatusCode;
+                if (!result)
+                {
+                    MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                    return;
+                }
             }
+            else
+            {
+                var response = await client.PutAsync(url + "/" + exam.Id, data);
+                var result = response.IsSuccessStatusCode;
+                if (!result)
+                {
+                    MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                    return;
+                }
+            }
+            
+  
             AddExamWindow w = new AddExamWindow(exam);
             w.Show();
         }

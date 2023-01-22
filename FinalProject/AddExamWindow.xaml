@@ -55,6 +55,7 @@
             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0,110,0">
                 <Button FontSize="12" HorizontalAlignment="Right" Height="25" Content="Remove Question" Width="100" x:Name="RemoveBtn" Click="RemoveBtn_Click"/>
                 <Button FontSize="12" HorizontalAlignment="Right" Margin="10" Height="25" Content="Add Question" Width="100" Name="AddBtn" Click="AddBtn_Click" />
+                <Button FontSize="12" HorizontalAlignment="Right" Margin="10" Height="25" Content="Update Question" Width="100" Name="UpdateBtn" Click="UpdateBtn_Click" />
             </StackPanel>
         </StackPanel>
     </Grid>

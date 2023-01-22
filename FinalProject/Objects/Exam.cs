@@ -19,7 +19,7 @@ namespace FinalProject.Demos.Objects
         public DateTime EndDate { get; set; }
         [JsonPropertyName("teacherId")]
         public string TeacherId { get; set; }
-        [JsonPropertyName("totalTime")]
+        [JsonPropertyName("totaltime")]
         public float Totaltime { get; set; }
         [JsonPropertyName("isRandomize")]
         public bool IsRandomize { get; set; } //maybe we don't need it?
@@ -47,6 +47,11 @@ namespace FinalProject.Demos.Objects
         public void mixQuestions()
         {
             
+        }
+
+        public override string ToString()
+        {
+            return Name.ToString();
         }
     }
 }
