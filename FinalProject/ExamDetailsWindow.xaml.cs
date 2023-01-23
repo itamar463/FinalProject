@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace FinalProject.Demos
 {
-    /// <summary>
-    /// Interaction logic for ExamDetailsWindow.xaml
-    /// </summary>
     public partial class ExamDetailsWindow : Window
     {
         private Teacher teacher;
@@ -33,6 +30,7 @@ namespace FinalProject.Demos
         private string url = "https://localhost:7277/api/Exams";
         public ExamDetailsWindow(Teacher t)
         {
+            //adding new exam
             InitializeComponent();
             this.teacher = t;
             exam = new Exam();
@@ -41,6 +39,7 @@ namespace FinalProject.Demos
         }
         public ExamDetailsWindow(Teacher t,Exam exam)
         {
+            //updating exam
             InitializeComponent();
             this.teacher = t;
             this.exam = exam;
@@ -52,6 +51,7 @@ namespace FinalProject.Demos
 
         void ExamToUpdate()
         {
+            //fill fields from the exam to update
             examNameTxt.Text = exam.Name;
             examTimeTxt.Text = exam.Totaltime.ToString();
             examMaxGradeTxt.Text = exam.Grade.ToString();
@@ -63,6 +63,7 @@ namespace FinalProject.Demos
         }
         private async void AddBtn_Click(object sender, RoutedEventArgs e)
         {
+            //add exam going to add questions
             exam.Name = examNameTxt.Text;
             if(exam.Name == "")
             {
@@ -70,20 +71,37 @@ namespace FinalProject.Demos
                 return;
             }
             exam.TeacherId = teacher.Id;
-            exam.Totaltime = float.Parse(examTimeTxt.Text);
-            if(exam.Totaltime < 0.5)
+            if(examTimeTxt.Text != "" && examMaxGradeTxt.Text != "")
             {
-                MessageBox.Show("Exam need to be at least half hour long.");
+                try
+                {
+                    exam.Totaltime = float.Parse(examTimeTxt.Text);
+                    if (exam.Totaltime < 0.5)
+                    {
+                        MessageBox.Show("Exam need to be at least half hour long.");
+                        return;
+                    }
+                    exam.Grade = int.Parse(examMaxGradeTxt.Text);
+                    if (exam.Grade < 10 || exam.Grade > 200)
+                    {
+                        MessageBox.Show("Exam need to be between 10 to 200 in max grade.");
+                        return;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Enter valid number.");
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Fill time and grade fields.");
                 return;
             }
-            exam.Grade = int.Parse(examMaxGradeTxt.Text);
-            if (exam.Grade < 10 || exam.Grade > 200)
-            {
-                MessageBox.Show("Exam need to have 10 in max grade.");
-                return;
-            }
+            
             exam.IsRandomize = (bool)isRandomCheck.IsChecked;
-            if(DateStart.SelectedDate.Value != null && DateEnd.SelectedDate.Value != null)
+            if(DateStart.SelectedDate != null && DateEnd.SelectedDate != null)
             {
                 exam.StratDate = DateStart.SelectedDate.Value;
                 exam.EndDate = DateEnd.SelectedDate.Value;
@@ -95,7 +113,7 @@ namespace FinalProject.Demos
             }
             var json = JsonConvert.SerializeObject(exam);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-
+            //if new exam need to POST if to update PUT
             if (!isToUpdate)
             {
                 var response = await client.PostAsync(url, data);

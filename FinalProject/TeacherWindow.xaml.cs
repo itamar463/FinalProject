@@ -1,4 +1,5 @@
 ﻿using FinalProject.Demos.Objects;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace FinalProject.Demos
 {
-    /// <summary>
-    /// Interaction logic for TeacherWindow.xaml
-    /// </summary>
     public partial class TeacherWindow : Window
     {
         private TeachersRepository repo;
@@ -40,7 +38,7 @@ namespace FinalProject.Demos
         }
         private void GetExams()
         {
-            
+            //add to combobox and teacher exmas list all the relative exams from DB
             var response = client?.GetAsync(url).Result;
             string? dataString = response?.Content.ReadAsStringAsync().Result;
             List<Exam>? exams = JsonSerializer.Deserialize<List<Exam>>(dataString);
@@ -68,6 +66,7 @@ namespace FinalProject.Demos
 
         private void UpdateExamBTN_Click(object sender, RoutedEventArgs e)
         {
+            //updating existing exam
             if(teacherExams.Count > 0)
             {
                 foreach (var item in teacherExams)
@@ -90,9 +89,8 @@ namespace FinalProject.Demos
 
         private void AddExamBTN_Click(object sender, RoutedEventArgs e)
         {
-            //add exam name
+            //adding new exam
             ExamDetailsWindow w = new ExamDetailsWindow(teach);
-            //AddExamWindow w = new AddExamWindow(new Exam());
             w.Show();
         }
 

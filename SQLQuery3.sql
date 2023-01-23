@@ -1,1 +1,1 @@
-﻿select * from Users
+﻿select * from Exams

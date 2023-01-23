@@ -30,13 +30,13 @@ namespace FinalProject.Demos
     
     public partial class AddExamWindow : Window
     {
-        private static float pointToGrade = 0;
-        private static int qNumber = 1;
+        private static float pointToGrade = 0; // check if enough points to set the full grade for the exam
+        private static int qNumber = 1; // the questions number by order
         private List<Question> _questions;
         private Exam exam;
         private HttpClient client;
         private string url = "https://localhost:7277/api/Questions";
-        //private float totalExamGrade = 0; // check if enough points to set the full grade for the exam
+        
         public AddExamWindow(Exam exam)
         {
             InitializeComponent();
@@ -70,14 +70,9 @@ namespace FinalProject.Demos
         }
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //remove question from exam
             if (this.QuestionsLST.SelectedItem is Question q)
-            {
-                
-
-                
-
-                //var result = await response.Content.ReadAsStringAsync();
-                
+            {   
                 int curr_num = q.QuestionNumber;
                 if(curr_num < qNumber)
                 {
@@ -119,20 +114,35 @@ namespace FinalProject.Demos
                 MessageBox.Show("Fill question content.");
                 return;
             }
-            question.Weight = float.Parse(QuestionWeight.Text);
-            if (question.Weight <= 0)
+            try
+            {
+                if(QuestionWeight.Text != "")
+                {
+                    question.Weight = float.Parse(QuestionWeight.Text);
+                    if (question.Weight <= 0)
+                    {
+                        MessageBox.Show("Fill with positive number.");
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Fill with positive number.");
+                    return;
+                }
+            }
+            catch
             {
                 MessageBox.Show("Fill with positive number.");
                 return;
             }
-            
-            //to activate
+
             if (pointToGrade > exam.Grade)
             {
                 MessageBox.Show("To many points for the exam.");
                 return;
             }
-            //need to get to the grade himself
+
             question.IsImage = (bool)IsImageQuestion.IsChecked; //need to hendle some point
 
             if ((bool)IsCorrectAnswer1.IsChecked)
@@ -231,6 +241,7 @@ namespace FinalProject.Demos
 
         private void QuestionsLST_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //when item from list box is selected
             if (this.QuestionsLST.SelectedItem is Question q)
             {
 
@@ -287,6 +298,7 @@ namespace FinalProject.Demos
         
         private async void SaveQtBTN_Click(object sender, RoutedEventArgs e)
         {
+            //when questions are ready to be save and be updated/added on DB
             if(pointToGrade != exam.Grade)
             {
                 MessageBox.Show("You need that the question weight will be as the exam grade.");
@@ -316,33 +328,8 @@ namespace FinalProject.Demos
 
             }
             // need to close window
+            this.Close();
         }
-
-        private void IsImageQuestion_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void IsCorrectAnswer1_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void IsCorrectAnswer2_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void IsCorrectAnswer3_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void IsCorrectAnswer4_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             if (this.QuestionsLST.SelectedItem is Question question) { 
@@ -460,6 +447,30 @@ namespace FinalProject.Demos
                 //this.QuestionsLST.ItemsSource = _questions;
                 //this.QuestionsLST.Items.Refresh();
             }
+
+        }
+        private void IsImageQuestion_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void IsCorrectAnswer1_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void IsCorrectAnswer2_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void IsCorrectAnswer3_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void IsCorrectAnswer4_Checked(object sender, RoutedEventArgs e)
+        {
 
         }
     }
