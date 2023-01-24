@@ -63,6 +63,8 @@ namespace FinalProject.Demos
                         pointToGrade += item.Weight;
                     }
                 }
+                _questions = _questions.OrderBy(x => x.QuestionNumber).ToList();
+
                 qNumber = _questions.Count + 1; //the question number to continue with
                 QuestionsLST.ItemsSource = _questions;
                 QuestionsLST.Items.Refresh();
@@ -342,7 +344,16 @@ namespace FinalProject.Demos
                     return;
                 }
                 pointToGrade -= question.Weight; //recalculate the weight of the question
-                question.Weight = float.Parse(QuestionWeight.Text);
+                try
+                {
+                    question.Weight = float.Parse(QuestionWeight.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Fill with positive number");
+                    return;
+                }
+               
                 if (question.Weight <= 0)
                 {
                     MessageBox.Show("Fill with positive number.");

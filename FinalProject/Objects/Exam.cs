@@ -36,7 +36,7 @@ namespace FinalProject.Demos.Objects
         public Exam(string name, string id, DateTime stratDate, DateTime endDate, Teacher teacher, float totaltime, bool isRandomize, List<Question> questions, float grade)
         {
             Name = name;
-            Id = Guid.NewGuid().ToString(); ;
+            Id = Guid.NewGuid().ToString(); 
             StratDate = stratDate;
             EndDate = endDate;
             TeacherId = teacher.Id;

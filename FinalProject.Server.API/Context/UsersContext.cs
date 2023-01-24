@@ -17,6 +17,7 @@ namespace FinalProject.Server.API.Context
         public DbSet<Person> Users { get; set; } = null!;
         public DbSet<Exam> Exams { get; set; } = null!;
         public DbSet<Question> Questions { get; set; } = null!;
+        public DbSet<FinalProject.Server.API.Models.ExamData> ExamData { get; set; }
 
         
     }
