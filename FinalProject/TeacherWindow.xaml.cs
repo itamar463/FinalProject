@@ -28,6 +28,8 @@ namespace FinalProject.Demos
 
         private List<Exam> teacherExams;
 
+        private List<ExamData>? examsInfo;
+
         private HttpClient client;
 
         private string url = "https://localhost:7277/api/Exams";
@@ -35,6 +37,13 @@ namespace FinalProject.Demos
         {
             InitializeComponent();
             
+        }
+
+        private void getExamData()
+        {
+            var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
+            string? dataString = response?.Content.ReadAsStringAsync().Result;
+            examsInfo = JsonSerializer.Deserialize<List<ExamData>>(dataString);
         }
         private void GetExams()
         {
@@ -60,7 +69,9 @@ namespace FinalProject.Demos
             Teacherlbl.Content += t.Name;
             client = new HttpClient();
             teacherExams = new List<Exam>();
+            examsInfo = new List<ExamData>();
             GetExams();
+            getExamData();
         }
 
 
@@ -122,9 +133,20 @@ namespace FinalProject.Demos
             }
         }
 
+        
+
         private void ExamsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //need to finish not ready!
             //ExamsCombo.Items
+            List<ExamData> data = new List<ExamData>();
+            int subAmount = 0;
+            int maxG, minG, ave;
+            Exam? examStat = teacherExams.Find(i => i.Name == ExamsCombo.SelectedItem);
+            if(examStat != null)
+            {
+                
+            }
         }
     }
 }

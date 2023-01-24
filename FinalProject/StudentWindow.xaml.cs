@@ -49,6 +49,18 @@ namespace FinalProject.Demos
             GetExams();
         }
 
+        private bool checkIfDidExam()
+        {
+            var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
+            
+            string? dataString = response?.Content.ReadAsStringAsync().Result;
+            List<ExamData>? e_data = JsonSerializer.Deserialize<List<ExamData>>(dataString);
+            if(e_data.Find(x => x.StudentId == stud.Id) != null)
+            {
+                return true;
+            }
+            return false;
+        }
         private void EnterExam_Click(object sender, RoutedEventArgs e)
         {
             //this func check if the exam exist and in the date range if true: open exam Window
@@ -71,10 +83,21 @@ namespace FinalProject.Demos
                         }
                         else
                         {
-                            ExamStudentWindow w = new ExamStudentWindow(stud,exam);
-                            w.Show();
-                            StudentExamTXT.Text = "";
-                            return;
+                            if (!checkIfDidExam())
+                            {
+                                ExamStudentWindow w = new ExamStudentWindow(stud, exam);
+                                w.Show();
+                                StudentExamTXT.Text = "";
+                                return;
+                            }
+                            else
+                            {
+                                MessageBox.Show("You allready did the exam!");
+                                this.Close();
+                                return;
+                                
+                            }
+                            
                         }
                         
                     }

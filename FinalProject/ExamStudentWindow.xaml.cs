@@ -34,7 +34,7 @@ namespace FinalProject.Demos
         private TimeSpan remainingTime;
         private ExamData? examData;
         private static float percentage = 0;
-        private static bool isChangeQuestion = false;
+         
         
 
         //private bool isThereDatails = false;
@@ -89,6 +89,18 @@ namespace FinalProject.Demos
             else
             {
                 lblTime.Content = remainingTime.ToString(@"hh\:mm\:ss");
+                percentage = 0;
+                int index = 0;
+                foreach (KeyValuePair<string, List<bool>> item in answers)
+                {
+                    if(item.Value.FindAll(x => x == true).Count >=1)
+                    {
+                        percentage += questions[index].Weight;
+                    }
+                    index++;
+                }
+                progBar.Value = percentage;
+
             }
         }
         private async void GetQuestions()
@@ -141,25 +153,25 @@ namespace FinalProject.Demos
             if (checkBoxes[0] == true)
             {
                 IsCorrectAnswer1.IsChecked = true;
-                isChangeQuestion = true;
+                
             }
             else IsCorrectAnswer1.IsChecked = false;
             if (checkBoxes[1] == true)
             {
                 IsCorrectAnswer2.IsChecked = true;
-                isChangeQuestion = true;
+                
             }
             else IsCorrectAnswer2.IsChecked = false;
             if (checkBoxes[2] == true)
             {
                 IsCorrectAnswer3.IsChecked = true;
-                isChangeQuestion = true;
+                
             }
             else IsCorrectAnswer3.IsChecked = false;
             if (checkBoxes[3] == true)
             {
                 IsCorrectAnswer4.IsChecked = true;
-                isChangeQuestion = true;
+                
             }
             else IsCorrectAnswer4.IsChecked = false;
         }
@@ -232,15 +244,16 @@ namespace FinalProject.Demos
         private void PrevBtn_Click(object sender, RoutedEventArgs e)
         {
             curr_question--;
+            if (curr_question < 0) curr_question += questions.Count;
             int index = curr_question % questions.Count;
-            if (index < 0) index += questions.Count;
+            
             QuestionNumberLbl.Content = "Question Number: " + questions[index].QuestionNumber.ToString();
             QuestionLbl.Content = questions[index].QuestionContent;
             Answer1Lbl.Content = questions[index].Answer1;
             Answer2Lbl.Content = questions[index].Answer2;
             Answer3Lbl.Content = questions[index].Answer3;
             Answer4Lbl.Content = questions[index].Answer4;
-            isChangeQuestion = true;
+            
             CheckedAnswers(QuestionLbl.Content.ToString());
             
         }
@@ -249,13 +262,15 @@ namespace FinalProject.Demos
         {
             curr_question++;
             int index = curr_question % questions.Count;
+            
+            
             QuestionNumberLbl.Content = "Question Number: " + questions[index].QuestionNumber.ToString();
             QuestionLbl.Content = questions[index].QuestionContent;
             Answer1Lbl.Content = questions[index].Answer1;
             Answer2Lbl.Content = questions[index].Answer2;
             Answer3Lbl.Content = questions[index].Answer3;
             Answer4Lbl.Content = questions[index].Answer4;
-            isChangeQuestion = true;
+            
             CheckedAnswers(QuestionLbl.Content.ToString());
             
         }
@@ -274,7 +289,7 @@ namespace FinalProject.Demos
                 Answer2Lbl.Content = questions[index].Answer2;
                 Answer3Lbl.Content = questions[index].Answer3;
                 Answer4Lbl.Content = questions[index].Answer4;
-                isChangeQuestion = true;
+                
                 CheckedAnswers(QuestionLbl.Content.ToString());
                 
             }
@@ -288,13 +303,9 @@ namespace FinalProject.Demos
                 if ((bool)IsCorrectAnswer1.IsChecked)
                 {
                     answers[QuestionLbl.Content.ToString()][0] = true;
-                    isChangeQuestion = false;
+                    
                 }
-                if(answers[QuestionLbl.Content.ToString()].FindAll(x=> x==true).Count == 1)
-                {
-                    percentage += questions[curr_question % questions.Count].Weight;
-                    progBar.Value = percentage;
-                }
+                
                 
 
             }
@@ -305,12 +316,7 @@ namespace FinalProject.Demos
             if (QuestionLbl.Content != "")
             {
                 if (!(bool)IsCorrectAnswer1.IsChecked) answers[QuestionLbl.Content.ToString()][0] = false;
-                if (!isChangeQuestion && answers[QuestionLbl.Content.ToString()].FindAll(x => x == false).Count == answers[QuestionLbl.Content.ToString()].Count)
-                {
-                    percentage += (questions[curr_question % questions.Count].Weight * -1);
-                    progBar.Value = percentage;
-                    isChangeQuestion = false;
-                }
+                
                 
             }
 
@@ -324,13 +330,9 @@ namespace FinalProject.Demos
                 if ((bool)IsCorrectAnswer2.IsChecked)
                 {
                     answers[QuestionLbl.Content.ToString()][1] = true;
-                    isChangeQuestion = false;
+                    
                 }
-                if (answers[QuestionLbl.Content.ToString()].FindAll(x => x == true).Count == 1)
-                {
-                    percentage += questions[curr_question % questions.Count].Weight;
-                    progBar.Value = percentage;
-                }
+                
             }
         }
         private void IsCorrectAnswer2_Unchecked(object sender, RoutedEventArgs e)
@@ -338,12 +340,7 @@ namespace FinalProject.Demos
             if (QuestionLbl.Content != "")
             {
                 if (!(bool)IsCorrectAnswer2.IsChecked) answers[QuestionLbl.Content.ToString()][1] = false;
-                if (!isChangeQuestion && answers[QuestionLbl.Content.ToString()].FindAll(x => x == false).Count == answers[QuestionLbl.Content.ToString()].Count)
-                {
-                    percentage += (questions[curr_question % questions.Count].Weight * -1);
-                    progBar.Value = percentage;
-                }
-                
+               
             }
 
         }
@@ -357,14 +354,10 @@ namespace FinalProject.Demos
                 if ((bool)IsCorrectAnswer3.IsChecked)
                 {
                     answers[QuestionLbl.Content.ToString()][2] = true;
-                    isChangeQuestion = false;
+                    
 
                 }
-                if (answers[QuestionLbl.Content.ToString()].FindAll(x => x == true).Count == 1)
-                {
-                    percentage += questions[curr_question % questions.Count].Weight;
-                    progBar.Value = percentage;
-                }
+                
             }
         }
         private void IsCorrectAnswer3_Unchecked(object sender, RoutedEventArgs e)
@@ -372,12 +365,7 @@ namespace FinalProject.Demos
             if (QuestionLbl.Content != "")
             {
                 if (!(bool)IsCorrectAnswer3.IsChecked) answers[QuestionLbl.Content.ToString()][2] = false;
-                if (!isChangeQuestion && answers[QuestionLbl.Content.ToString()].FindAll(x => x == false).Count == answers[QuestionLbl.Content.ToString()].Count)
-                {
-                    percentage += (questions[curr_question % questions.Count].Weight * -1);
-                    progBar.Value = percentage;
-                    
-                }
+                
                 
             }
 
@@ -391,13 +379,9 @@ namespace FinalProject.Demos
                 if ((bool)IsCorrectAnswer4.IsChecked)
                 {
                     answers[QuestionLbl.Content.ToString()][3] = true;
-                    isChangeQuestion = false;
+                    
                 }
-                if (answers[QuestionLbl.Content.ToString()].FindAll(x => x == true).Count == 1)
-                {
-                    percentage += questions[curr_question % questions.Count].Weight;
-                    progBar.Value = percentage;
-                }
+                
             }
         }
         private void IsCorrectAnswer4_Unchecked(object sender, RoutedEventArgs e)
@@ -405,12 +389,7 @@ namespace FinalProject.Demos
             if (QuestionLbl.Content != "")
             {
                 if (!(bool)IsCorrectAnswer4.IsChecked) answers[QuestionLbl.Content.ToString()][3] = false;
-                if (!isChangeQuestion && answers[QuestionLbl.Content.ToString()].FindAll(x => x == false).Count == answers[QuestionLbl.Content.ToString()].Count)
-                {
-                    percentage += (questions[curr_question % questions.Count].Weight * -1);
-                    progBar.Value = percentage;
-                    
-                }
+                
                 
 
             }
