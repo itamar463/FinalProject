@@ -16,12 +16,12 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Label Name="Teacherlbl"  Grid.Column="0" Background="LightBlue" Content="Hello " FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="1" Height="37"/>
-        <Label Name="Statlbl"  Grid.Column="1" Background="LightBlue" Content="Exam: " FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="2" Height="37"/>
+        <Label Name="Statlbl"  Grid.Column="1" Background="LightBlue" Content="" FontSize="20"  VerticalAlignment="Center" Grid.ColumnSpan="2" Height="37"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Background="AliceBlue">
-            <Label Name="submitLbl" Content="Submits amount: " FontSize="20" Margin="0,20,0,0"></Label>
-            <Label Name="maxGradeLbl" Content="Max grade: " FontSize="20" Margin="0,20,0,0"></Label>
-            <Label Name="minGradeLbl" Content="Min grade: " FontSize="20" Margin="0,20,0,0"></Label>
-            <Label Name="aveGradeLbl" Content="Average grade: " FontSize="20" Margin="0,20,0,0"></Label>
+            <Label Name="submitLbl" Content="" FontSize="20" Margin="0,20,0,0"></Label>
+            <Label Name="maxGradeLbl" Content="" FontSize="20" Margin="0,20,0,0"></Label>
+            <Label Name="minGradeLbl" Content="" FontSize="20" Margin="0,20,0,0"></Label>
+            <Label Name="aveGradeLbl" Content="" FontSize="20" Margin="0,20,0,0"></Label>
         </StackPanel>
         <StackPanel Grid.Row="1" Background="AliceBlue">
             <Label Content="Choose Exam: "></Label>

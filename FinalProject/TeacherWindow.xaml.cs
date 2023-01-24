@@ -134,17 +134,55 @@ namespace FinalProject.Demos
         }
 
         
-
         private void ExamsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //need to finish not ready!
             //ExamsCombo.Items
-            List<ExamData> data = new List<ExamData>();
+            //List<ExamData> data = new List<ExamData>();
+            submitLbl.Content = "";
+            maxGradeLbl.Content = "";
+            minGradeLbl.Content = "";
+            aveGradeLbl.Content = "";
             int subAmount = 0;
-            int maxG, minG, ave;
+            float maxG=0, minG=200, ave=0;
             Exam? examStat = teacherExams.Find(i => i.Name == ExamsCombo.SelectedItem);
             if(examStat != null)
             {
+                Statlbl.Content = "Exam: " + examStat.Name;
+                foreach (var item in examsInfo)
+                {
+                    if(item.ExamId == examStat.Id)
+                    {
+                        if (minG > item.Grade) minG = item.Grade;
+                        if (maxG < item.Grade) maxG = item.Grade;
+                        ave += item.Grade;
+                        subAmount++;
+                        //List<string> questions = item.QuestionDetails.Split("***").ToList();
+                        //foreach (var question in questions)
+                        //{
+                        //    List<string> details = question.Split("^^^").ToList();
+
+                        //}
+
+
+                    }
+                }
+                submitLbl.Content += "Submits amount: " + subAmount.ToString();
+                maxGradeLbl.Content += "Max grade: " + maxG.ToString();
+                
+                ave /= subAmount;
+                if(subAmount != 0)
+                {
+                    aveGradeLbl.Content += "Average grade: " + ave.ToString();
+                    minGradeLbl.Content += "Min grade: " + minG.ToString();
+                }
+                else
+                {
+                    aveGradeLbl.Content += "Average grade: 0";
+                    minGradeLbl.Content += "Min grade: 0";
+                }
+                
+                //need to iterate the questions string in each item in data
                 
             }
         }
