@@ -1,9 +1,13 @@
 ﻿using FinalProject.Demos.Objects;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,6 +22,7 @@ using System.Windows.Shapes;
 
 namespace FinalProject.Demos
 {
+    
     public partial class TeacherWindow : Window
     {
         private TeachersRepository repo;
@@ -145,6 +150,8 @@ namespace FinalProject.Demos
             aveGradeLbl.Content = "";
             int subAmount = 0;
             float maxG=0, minG=200, ave=0;
+            StudentsData sData = new StudentsData();
+            GetQuestionsData(sData);
             Exam? examStat = teacherExams.Find(i => i.Name == ExamsCombo.SelectedItem);
             if(examStat != null)
             {
@@ -157,12 +164,7 @@ namespace FinalProject.Demos
                         if (maxG < item.Grade) maxG = item.Grade;
                         ave += item.Grade;
                         subAmount++;
-                        //List<string> questions = item.QuestionDetails.Split("***").ToList();
-                        //foreach (var question in questions)
-                        //{
-                        //    List<string> details = question.Split("^^^").ToList();
-
-                        //}
+                        
 
 
                     }
@@ -181,10 +183,84 @@ namespace FinalProject.Demos
                     aveGradeLbl.Content += "Average grade: 0";
                     minGradeLbl.Content += "Min grade: 0";
                 }
+                dataGrid.Visibility = Visibility.Visible;
+
+                // var check = sData.Grades.SelectMany(x => x.Value.Select(y => new { Key = x.Key, Value = y }));
+                //dataGrid.ItemsSource = sData.Grades.SelectMany(x => x.Value.Select(y => new { Key = x.Key, Value = y }));
+                dataGrid.ItemsSource = sData.Grades;
+  
                 
+                //foreach (var item in sData.StudentsAnswers)
+                //{
+                //    int i = 1;
+                //    foreach (var answer in item.Value)
+                //    {
+                //        string Val = answer.ToString();
+                //        DataGridTextColumn column = new DataGridTextColumn();
+                //        column.Header = "Question " + i.ToString();
+                //        column.Binding = new Binding("Val");
+                //        dataGrid.Columns.Add(column);
+                //        i++;
+                //    }
+                //}
+                //if (sData != null) dataGrid.ItemsSource = sData.Grades;
+
                 //need to iterate the questions string in each item in data
-                
+                //DataGridTextColumn column = new DataGridTextColumn();
+                //column.Header = "Column Name";
+                //column.Binding = new Binding("PropertyName");
+                //dataGrid.Columns.Add(column);
+
             }
+        }
+        private void GetQuestionsData(StudentsData data)
+        {
+            Exam? examStat = teacherExams.Find(i => i.Name == ExamsCombo.SelectedItem);
+            if (examStat != null)
+            {
+                data.StudentsAnswers = new Dictionary<string, List<bool>>();
+                data.Grades = new Dictionary<string, string>();
+                Statlbl.Content = "Exam: " + examStat.Name;
+                foreach (var item in examsInfo)
+                {
+                    if (item.ExamId == examStat.Id)
+                    {
+                        data.Grades.Add(item.StudentName, item.Grade.ToString());
+                        List<string> questions = item.QuestionDetails.Split("***").ToList();
+                        foreach (var question in questions)
+                        {
+                            List<string> details = question.Split("^^^").ToList();
+                            
+                            if (!data.StudentsAnswers.ContainsKey(item.StudentName))
+                            {
+                                data.StudentsAnswers.Add(item.StudentName, new List<bool>());
+                                if (details[1] == details[2]) data.StudentsAnswers[item.StudentName].Add(true);
+                                else data.StudentsAnswers[item.StudentName].Add(false);
+                            }
+                            else
+                            {
+                                if (details[1] == details[2]) data.StudentsAnswers[item.StudentName].Add(true);
+                                else data.StudentsAnswers[item.StudentName].Add(false);
+                            }
+                            
+
+                        }
+
+
+                    }
+                }
+
+            }
+        }
+        public class StudentsData
+        {
+            //public string ExamName { get; set; }
+            public Dictionary<string,string> Grades { get; set; }
+
+            
+            public Dictionary<string,List<bool>> StudentsAnswers { get; set; }
+
+
         }
     }
 }

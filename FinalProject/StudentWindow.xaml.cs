@@ -49,13 +49,13 @@ namespace FinalProject.Demos
             GetExams();
         }
 
-        private bool checkIfDidExam()
+        private bool checkIfDidExam(string examId)
         {
             var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
             
             string? dataString = response?.Content.ReadAsStringAsync().Result;
             List<ExamData>? e_data = JsonSerializer.Deserialize<List<ExamData>>(dataString);
-            if(e_data.Find(x => x.StudentId == stud.Id) != null)
+            if(e_data.Find(x => x.StudentId == stud.Id && x.ExamId == examId) != null)
             {
                 return true;
             }
@@ -83,7 +83,7 @@ namespace FinalProject.Demos
                         }
                         else
                         {
-                            if (!checkIfDidExam())
+                            if (!checkIfDidExam(exam.Id))
                             {
                                 ExamStudentWindow w = new ExamStudentWindow(stud, exam);
                                 w.Show();

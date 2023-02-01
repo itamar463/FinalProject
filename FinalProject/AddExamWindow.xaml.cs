@@ -30,8 +30,8 @@ namespace FinalProject.Demos
     
     public partial class AddExamWindow : Window
     {
-        private static float pointToGrade = 0; // check if enough points to set the full grade for the exam
-        private static int qNumber = 1; // the questions number by order
+        private float pointToGrade = 0; // check if enough points to set the full grade for the exam
+        private int qNumber = 1; // the questions number by order
         private List<Question> _questions;
         private Exam exam;
         private HttpClient client;
@@ -47,9 +47,10 @@ namespace FinalProject.Demos
             GetQuestions();
         }
 
+        //GetQuestions: if the exam is need update, takes the relative questions from data base
         private void GetQuestions()
         {
-            //if the exam is need update, takes the relative questions from db
+            
             var response = client?.GetAsync(url).Result;
             string? dataString = response?.Content.ReadAsStringAsync().Result;
             List<Question>? allQuestions = JsonSerializer.Deserialize<List<Question>>(dataString);
@@ -70,9 +71,10 @@ namespace FinalProject.Demos
                 QuestionsLST.Items.Refresh();
             }
         }
+        //RemoveBtn_Click: remove selected question from exam(selected from listbox)
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
         {
-            //remove question from exam
+            
             if (this.QuestionsLST.SelectedItem is Question q)
             {   
                 int curr_num = q.QuestionNumber;
@@ -82,26 +84,17 @@ namespace FinalProject.Demos
                     while (curr_num < qNumber)
                     {
                         _questions[curr_num].QuestionNumber--;
-                        //var json = JsonConvert.SerializeObject(_questions[curr_num]);
-                        //var data = new StringContent(json, Encoding.UTF8, "application/json");
-                        //var response = await client.PutAsync(url + "/" + _questions[curr_num].Id,data);
                         curr_num++;
                     }
                     
                 }
-                //var response_del = await client.DeleteAsync(url + "/" + q.Id);
-                //var result = response_del.IsSuccessStatusCode;
-                //if (!result)
-                //{
-                    //MessageBox.Show("Error Code" + response_del.StatusCode + " : Message - " + response_del.ReasonPhrase);
-                //}
                 _questions.Remove(q);
                 QuestionsLST.ItemsSource = _questions;
                 QuestionsLST.Items.Refresh();
                 QuestionsLST.SelectedIndex = 0;
             }
         }
-        
+        //AddBtn_Click: add new question to the exam
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
         
@@ -109,7 +102,7 @@ namespace FinalProject.Demos
             var question = new Question();
             //to check that there is correct answer
             bool is_pressed = false;
-
+            //check question content is not empty
             question.QuestionContent = QuestionTXT.Text;
             if (question.QuestionContent == "")
             {
@@ -118,7 +111,8 @@ namespace FinalProject.Demos
             }
             try
             {
-                if(QuestionWeight.Text != "")
+                //check question weight is valid and not empty
+                if (QuestionWeight.Text != "")
                 {
                     question.Weight = float.Parse(QuestionWeight.Text);
                     if (question.Weight <= 0)
@@ -138,10 +132,10 @@ namespace FinalProject.Demos
                 MessageBox.Show("Fill with positive number.");
                 return;
             }
-
+            //check if there is not to many points relative to exam grade(in total)
             if (pointToGrade > exam.Grade)
             {
-                MessageBox.Show("To many points for the exam.");
+                MessageBox.Show("To many points for the exam: " + pointToGrade.ToString());
                 return;
             }
 
@@ -240,10 +234,9 @@ namespace FinalProject.Demos
                     break;
             }
         }
-
+        //QuestionsLST_SelectionChanged: when item from list box is selected, show details of the chosen question
         private void QuestionsLST_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //when item from list box is selected
             if (this.QuestionsLST.SelectedItem is Question q)
             {
 
@@ -289,16 +282,63 @@ namespace FinalProject.Demos
                 }
             }
         }
-
-        //private void RandomizeQuestions_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //    Random rnd = new Random();
-        //    _questions = _questions.OrderBy(x => rnd.Next()).ToList();
-        //}
-
-        
+        //MixAnswers: mixing the order of the ansewrs
+        private void MixAnswers(Question question)
+        {
+            //mixing answers
+            List<string> answersList = new List<string>();
+            answersList.Add(question.Answer1);
+            answersList.Add(question.Answer2);
+            answersList.Add(question.Answer3);
+            answersList.Add(question.Answer4);
+            string correctAnswer = "";
+            switch (question.CorrectAnswer)
+            {
+                case 1:
+                    correctAnswer = question.Answer1;
+                    break;
+                case 2:
+                    correctAnswer = question.Answer2;
+                    break;
+                case 3:
+                    correctAnswer = question.Answer3;
+                    break;
+                case 4:
+                    correctAnswer = question.Answer4;
+                    break;
+                default:
+                    break;
+            }
+            Random rnd = new Random();
+            answersList = answersList.OrderBy(x => rnd.Next()).ToList();
+            if (answersList[0] == correctAnswer)
+            {
+                question.Answer1 = correctAnswer;
+                question.CorrectAnswer = 1;
+            }else question.Answer1 = answersList[0];
+            if (answersList[1] == correctAnswer)
+            {
+                question.Answer2 = correctAnswer;
+                question.CorrectAnswer = 2;
+            }
+            else question.Answer2 = answersList[1];
+            if (answersList[2] == correctAnswer)
+            {
+                question.Answer3 = correctAnswer;
+                question.CorrectAnswer = 3;
+            }
+            else question.Answer3 = answersList[2];
+            if (answersList[3] == correctAnswer)
+            {
+                question.Answer4 = correctAnswer;
+                question.CorrectAnswer = 4;
+            }
+            else question.Answer4 = answersList[3];
+            return;
+        }
+        //SaveQtBTN_Click: save questions in database, if the exam exist - PUT, else POST
         private async void SaveQtBTN_Click(object sender, RoutedEventArgs e)
+        
         {
             //when questions are ready to be save and be updated/added on DB
             if(pointToGrade != exam.Grade)
@@ -306,7 +346,22 @@ namespace FinalProject.Demos
                 MessageBox.Show("You need that the question weight will be as the exam grade.");
                 return;
             }
-            
+            if (exam.IsRandomize)
+            {
+                //optional to devide randomize for questions and answers seperated
+                //mixing exam questions
+                Random rnd = new Random();
+                _questions = _questions.OrderBy(x => rnd.Next()).ToList();
+                int i = 1;
+                foreach (Question question in _questions)
+                {
+                    MixAnswers(question);
+                    question.QuestionNumber = i;
+                    
+                    i++;
+                }
+                
+            }
             foreach (var item in _questions)
             {
                 var json = JsonConvert.SerializeObject(item);
@@ -332,6 +387,7 @@ namespace FinalProject.Demos
             // need to close window
             this.Close();
         }
+        //UpdateBtn_Click: if question exist and you want to change it, update function
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             if (this.QuestionsLST.SelectedItem is Question question) { 
@@ -454,9 +510,6 @@ namespace FinalProject.Demos
                     default:
                         break;
                 }
-
-                //this.QuestionsLST.ItemsSource = _questions;
-                //this.QuestionsLST.Items.Refresh();
             }
 
         }

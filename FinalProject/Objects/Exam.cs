@@ -22,12 +22,10 @@ namespace FinalProject.Demos.Objects
         [JsonPropertyName("totaltime")]
         public float Totaltime { get; set; }
         [JsonPropertyName("isRandomize")]
-        public bool IsRandomize { get; set; } //maybe we don't need it?
+        public bool IsRandomize { get; set; } 
         
-       
         [JsonPropertyName("grade")]
         public float Grade { get; set; }
-
 
         public Exam() : this("", "", DateTime.Now, DateTime.Now, new Teacher(), -1, false, new List<Question>(), -1)
         {
@@ -44,11 +42,6 @@ namespace FinalProject.Demos.Objects
             IsRandomize = isRandomize;
             Grade = grade;
         }
-        public void mixQuestions()
-        {
-            
-        }
-
         public override string ToString()
         {
             return Name.ToString();
