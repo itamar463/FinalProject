@@ -52,7 +52,6 @@ namespace FinalProject.Demos.Objects
                     Student student = new Student();
                     student.Age = p.Age;
                     student.IsTeacher = p.IsTeacher;
-                    student.Faculty = p.Faculty;
                     student.Id = p.Id;
                     student.Password = p.Password;
                     student.Name = p.Name;

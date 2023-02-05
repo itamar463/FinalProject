@@ -16,8 +16,7 @@ namespace FinalProject.Demos.Objects
         public string Id { get; set; }
 
         public int age = -1;
-        [JsonPropertyName("faculty")]
-        public string Faculty { get; set; }
+        
         [JsonPropertyName("password")]
         public string Password { get; set; } 
         [JsonPropertyName("age")]
@@ -35,16 +34,15 @@ namespace FinalProject.Demos.Objects
         }
         [JsonPropertyName("isTeacher")]
         public bool IsTeacher { get; set; }
-        public Person() : this("", -1, "", "", false)
+        public Person() : this("", -1, "", false)
         {
 
         }
-        public Person(string name, int age, string fac,string pass, bool whoAmI)
+        public Person(string name, int age, string pass, bool whoAmI)
         {
             Name = name;
             Age = age;
             Id = Guid.NewGuid().ToString();
-            Faculty = fac;
             Password = pass; 
             IsTeacher = whoAmI;
         }

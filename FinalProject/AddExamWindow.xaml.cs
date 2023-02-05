@@ -379,6 +379,11 @@ namespace FinalProject.Demos
         private async void SaveQtBTN_Click(object sender, RoutedEventArgs e)
         
         {
+            if(_questions.Count == 0)
+            {
+                MessageBox.Show("Exam should contain at least one question.");
+                return;
+            }
             //when questions are ready to be save and be updated/added on DB
             if(pointToGrade != exam.Grade)
             {

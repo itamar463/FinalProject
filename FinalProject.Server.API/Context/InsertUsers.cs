@@ -19,7 +19,6 @@ namespace FinalProject.Server.API.Context
                     dbContext.Add(new Student
                     {
                         Age = rand.Next(20, 40),
-                        Faculty = Fac[0],
                         Name = PersonGenerator.GenerateRandomFirstName() + " " + PersonGenerator.GenerateRandomLastName(),
                         Password = "123" + i.ToString(),
                         IsTeacher = false
@@ -28,7 +27,6 @@ namespace FinalProject.Server.API.Context
                     {
 
                         Age = rand.Next(40, 67),
-                        Faculty = Fac[i - 1],
                         Name = PersonGenerator.GenerateRandomFirstName() + " " + PersonGenerator.GenerateRandomLastName(),
                         Password = "1234" + i.ToString(),
                         IsTeacher = true
@@ -36,7 +34,6 @@ namespace FinalProject.Server.API.Context
                     dbContext.Add(new Student
                     {
                         Age = rand.Next(20, 40),
-                        Faculty = Fac[1],
                         Name = PersonGenerator.GenerateRandomFirstName() + " " + PersonGenerator.GenerateRandomLastName(),
                         Password = "234" + i.ToString(),
                         IsTeacher = false
@@ -44,7 +41,6 @@ namespace FinalProject.Server.API.Context
                     dbContext.Add(new Student
                     {
                         Age = rand.Next(20, 40),
-                        Faculty = Fac[2],
                         Name = PersonGenerator.GenerateRandomFirstName() + " " + PersonGenerator.GenerateRandomLastName(),
                         Password = "345" + i.ToString(),
                         IsTeacher = false
@@ -52,7 +48,6 @@ namespace FinalProject.Server.API.Context
                     dbContext.Add(new Student
                     {
                         Age = rand.Next(20, 40),
-                        Faculty = Fac[3],
                         Name = PersonGenerator.GenerateRandomFirstName() + " " + PersonGenerator.GenerateRandomLastName(),
                         Password = "456" + i.ToString(),
                         IsTeacher = false

@@ -59,7 +59,6 @@ namespace FinalProject.Demos.Objects
                     Teacher t = new Teacher();
                     t.Age = p.Age;
                     t.IsTeacher = p.IsTeacher;
-                    t.Faculty = p.Faculty;
                     t.Id = p.Id;
                     t.Name = p.Name;
                     t.Password = p.Password;
