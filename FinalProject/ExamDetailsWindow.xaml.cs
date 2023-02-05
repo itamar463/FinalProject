@@ -28,6 +28,7 @@ namespace FinalProject.Demos
         private bool isToUpdate = false;
 
         private string url = "https://localhost:7277/api/Exams";
+
         public ExamDetailsWindow(Teacher t)
         {
             //adding new exam
@@ -134,10 +135,11 @@ namespace FinalProject.Demos
                     return;
                 }
             }
-            
-  
-            AddExamWindow w = new AddExamWindow(exam);
+            bool answerRand = (bool)isRandomAnswersCheck.IsChecked;
+            AddExamWindow w = new AddExamWindow(exam,answerRand);
             w.Show();
+            this.Close();
         }
+        
     }
 }

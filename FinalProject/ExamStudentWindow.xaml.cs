@@ -22,6 +22,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Drawing;
 using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FinalProject.Demos
 {
@@ -61,13 +62,7 @@ namespace FinalProject.Demos
             UpdateExamDetails();
             startExam();
             progBar.Value = 0;
-            
-
         }
-        
-
-        
-
         private async void UpdateExamDetails()
         {
             examData = new ExamData();
@@ -271,6 +266,23 @@ namespace FinalProject.Demos
         }
         private async void FinishExamBTN_Click(object sender, RoutedEventArgs e)
         {
+            foreach (KeyValuePair<string, List<bool>> item in answers)
+            {
+                if (item.Value.FindAll(x => x == true).Count == 0)
+                {
+                    if (MessageBox.Show("Are you sure you want to finish?", "Exam is not finished", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        SubmitExam();
+                        this.Close();
+                    }
+
+                }
+
+            }
             SubmitExam();
             this.Close();
         }

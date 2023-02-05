@@ -38,6 +38,8 @@ namespace FinalProject.Demos
         private HttpClient client;
 
         private string url = "https://localhost:7277/api/Exams";
+
+        
         public TeacherWindow()
         {
             InitializeComponent();
@@ -60,8 +62,8 @@ namespace FinalProject.Demos
             {
                 if(item.TeacherId == teach.Id)
                 {
-                    teacherExams.Add(item);
-                    ExamsCombo.Items.Add(item.Name);
+                    if(!teacherExams.Contains(item)) teacherExams.Add(item);
+                    if(!ExamsCombo.Items.Contains(item.Name)) ExamsCombo.Items.Add(item.Name);
                 }
             }
         } 
@@ -77,7 +79,11 @@ namespace FinalProject.Demos
             examsInfo = new List<ExamData>();
             GetExams();
             getExamData();
+            
+            
         }
+
+        
 
 
         private void UpdateExamBTN_Click(object sender, RoutedEventArgs e)
@@ -99,15 +105,19 @@ namespace FinalProject.Demos
             {
                 ExamDetailsWindow w = new ExamDetailsWindow(teach, exam);
                 w.Show();
+                
             }
             
         }
+
+        
 
         private void AddExamBTN_Click(object sender, RoutedEventArgs e)
         {
             //adding new exam
             ExamDetailsWindow w = new ExamDetailsWindow(teach);
-            w.Show();
+            w.ShowDialog();
+            GetExams();
         }
         private async void DeleteQuestions()
         {

@@ -42,8 +42,9 @@ namespace FinalProject.Demos
         private byte[]? imgData = null; //added
        // private BitmapImage bitmapImage; //added
         private Image imageShow;
+        private bool isAnswerRand;
         
-        public AddExamWindow(Exam exam)
+        public AddExamWindow(Exam exam, bool isArand)
         {
             InitializeComponent();
             _questions = new List<Question>();
@@ -52,6 +53,7 @@ namespace FinalProject.Demos
             client = new HttpClient();
             //bitmapImage = new BitmapImage();
             imageShow = new Image();
+            isAnswerRand = isArand;
             GetQuestions();
         }
 
@@ -392,11 +394,17 @@ namespace FinalProject.Demos
                 int i = 1;
                 foreach (Question question in _questions)
                 {
-                    MixAnswers(question);
                     question.QuestionNumber = i;
                     i++;
                 }
                 
+            }
+            if (isAnswerRand)
+            {
+                foreach (var q in _questions)
+                {
+                    MixAnswers(q);
+                }
             }
             foreach (var item in _questions)
             {
