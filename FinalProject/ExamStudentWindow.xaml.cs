@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Policy;
@@ -18,6 +19,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
+using Image = System.Windows.Controls.Image;
 
 namespace FinalProject.Demos
 {
@@ -34,10 +38,6 @@ namespace FinalProject.Demos
         private TimeSpan remainingTime;
         private ExamData? examData;
         private static float percentage = 0;
-         
-        
-
-        //private bool isThereDatails = false;
         private string url = "https://localhost:7277/api/ExamDatas";
         public ExamStudentWindow()
         {
@@ -125,7 +125,32 @@ namespace FinalProject.Demos
                 QuestionsLST.Items.Refresh();
             }
         }
-        
+        private void ImageContent(Question q)
+        {
+            Image imageControl = new Image();
+            BitmapImage bitmapimage = new BitmapImage();
+            //byte[] b = Encoding.ASCII.GetBytes(questions[0].QuestionContent);
+            using (MemoryStream memory = new MemoryStream(q.ImageData))
+            {
+                memory.Position = 0;
+                bitmapimage.BeginInit();
+                bitmapimage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.UriSource = null;
+                bitmapimage.StreamSource = memory;
+                bitmapimage.DecodePixelHeight = 40;
+                bitmapimage.DecodePixelWidth = 250;
+                bitmapimage.EndInit();
+            }
+
+            imageControl.Source = bitmapimage;
+            imageControl.Width = 250;
+            imageControl.Height = 40;
+            QuestionImgLbl.Content = imageControl;
+            QuestionLbl.Content = q.QuestionContent;
+            QuestionLbl.Visibility = Visibility.Collapsed;
+            QuestionImgLbl.Visibility = Visibility.Visible;
+        }
         private void startExam()
         {
             //Clayton Fellin
@@ -133,7 +158,16 @@ namespace FinalProject.Demos
             if (questions.Count > 0)
             {
                 QuestionNumberLbl.Content = "Question Number: " +  questions[0].QuestionNumber.ToString();
-                QuestionLbl.Content = questions[0].QuestionContent;
+                if (questions[0].IsImage)
+                {
+                    ImageContent(questions[0]);
+                }
+                else
+                {
+                    QuestionLbl.Content = questions[0].QuestionContent;
+                    QuestionLbl.Visibility = Visibility.Visible;
+                    QuestionImgLbl.Visibility = Visibility.Collapsed;
+                }
                 Answer1Lbl.Content = questions[0].Answer1;
                 Answer2Lbl.Content = questions[0].Answer2;
                 Answer3Lbl.Content = questions[0].Answer3;
@@ -248,7 +282,13 @@ namespace FinalProject.Demos
             int index = curr_question % questions.Count;
             
             QuestionNumberLbl.Content = "Question Number: " + questions[index].QuestionNumber.ToString();
-            QuestionLbl.Content = questions[index].QuestionContent;
+            if (questions[index].IsImage) ImageContent(questions[index]);
+            else
+            {
+                QuestionLbl.Content = questions[index].QuestionContent;
+                QuestionLbl.Visibility = Visibility.Visible;
+                QuestionImgLbl.Visibility = Visibility.Collapsed;
+            }
             Answer1Lbl.Content = questions[index].Answer1;
             Answer2Lbl.Content = questions[index].Answer2;
             Answer3Lbl.Content = questions[index].Answer3;
@@ -265,7 +305,13 @@ namespace FinalProject.Demos
             
             
             QuestionNumberLbl.Content = "Question Number: " + questions[index].QuestionNumber.ToString();
-            QuestionLbl.Content = questions[index].QuestionContent;
+            if (questions[index].IsImage) ImageContent(questions[index]);
+            else
+            {
+                QuestionLbl.Content = questions[index].QuestionContent;
+                QuestionLbl.Visibility = Visibility.Visible;
+                QuestionImgLbl.Visibility = Visibility.Collapsed;
+            }
             Answer1Lbl.Content = questions[index].Answer1;
             Answer2Lbl.Content = questions[index].Answer2;
             Answer3Lbl.Content = questions[index].Answer3;
@@ -284,7 +330,13 @@ namespace FinalProject.Demos
                 int index = QuestionsLST.SelectedIndex;
                 curr_question = index;
                 QuestionNumberLbl.Content = "Question Number: " + questions[index].QuestionNumber.ToString();
-                QuestionLbl.Content = questions[index].QuestionContent;
+                if (questions[index].IsImage) ImageContent(questions[index]);
+                else
+                {
+                    QuestionLbl.Content = questions[index].QuestionContent;
+                    QuestionLbl.Visibility = Visibility.Visible;
+                    QuestionImgLbl.Visibility = Visibility.Collapsed;
+                }
                 Answer1Lbl.Content = questions[index].Answer1;
                 Answer2Lbl.Content = questions[index].Answer2;
                 Answer3Lbl.Content = questions[index].Answer3;

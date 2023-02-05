@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Server.API.Context;
 using FinalProject.Server.API.Models;
+using System.Text;
 
 namespace FinalProject.Server.API.Controllers
 {
@@ -76,6 +77,19 @@ namespace FinalProject.Server.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Question>> PostQuestion(Question question)
         {
+            //if (question.IsImage)
+            //{
+            //    byte[] imageData;
+            //    byte[] stringBytes = Encoding.ASCII.GetBytes(question.QuestionContent);
+            //    using (var stream = new MemoryStream(stringBytes))
+            //    {
+            //        using (var binaryReader = new BinaryReader(stream))
+            //        {
+            //            imageData = binaryReader.ReadBytes((int)stream.Length);
+            //        }
+            //    }
+            //    question.QuestionContent = Encoding.ASCII.GetString(imageData);
+            //}
             _context.Questions.Add(question);
             await _context.SaveChangesAsync();
 

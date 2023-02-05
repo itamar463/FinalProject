@@ -24,7 +24,8 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <Label Margin ="0 7 0 0" Name="QuestionNumberLbl" Content="Question Number: " FontSize="15"></Label>
             <StackPanel Margin="3 5 6 0" Orientation="Horizontal" Height="46">
-                <Label Name="QuestionLbl" Width="350" Margin="70,0,0,0" />
+                <Label Name="QuestionLbl" Width="350" Margin="70,0,0,0" Visibility="Visible"/>
+                <Label Name="QuestionImgLbl" Width="350" Margin="70,0,0,0" Visibility="Collapsed" />
             </StackPanel>
             <StackPanel Margin="3 5 3 0" Orientation="Horizontal" Height="46">
                 

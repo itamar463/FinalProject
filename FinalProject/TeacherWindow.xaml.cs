@@ -109,7 +109,50 @@ namespace FinalProject.Demos
             ExamDetailsWindow w = new ExamDetailsWindow(teach);
             w.Show();
         }
+        private async void DeleteQuestions()
+        {
+            var response = client?.GetAsync("https://localhost:7277/api/Questions").Result;
+            string? dataString = response?.Content.ReadAsStringAsync().Result;
+            List<Question>? allQuestions = JsonSerializer.Deserialize<List<Question>>(dataString);
+            if (allQuestions != null)
+            {
+                foreach (var item in allQuestions)
+                {
+                    if (item.ExamId == exam.Id)
+                    {
+                        var response_del = await client.DeleteAsync("https://localhost:7277/api/Questions" + "/" + item.Id);
+                        var result = response_del.IsSuccessStatusCode;
+                        if (!result)
+                        {
+                            MessageBox.Show("Error Code" + response_del.StatusCode + " : Message - " + response_del.ReasonPhrase);
+                        }
 
+                    }
+                }
+            }
+        }
+        private async void DeleteExamData()
+        {
+            var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
+            string? dataString = response?.Content.ReadAsStringAsync().Result;
+            List<ExamData>? allData = JsonSerializer.Deserialize<List<ExamData>>(dataString);
+            if (allData != null)
+            {
+                foreach (var item in allData)
+                {
+                    if (item.ExamId == exam.Id)
+                    {
+                        var response_del = await client.DeleteAsync("https://localhost:7277/api/ExamDatas" + "/" + item.Id);
+                        var result = response_del.IsSuccessStatusCode;
+                        if (!result)
+                        {
+                            MessageBox.Show("Error Code" + response_del.StatusCode + " : Message - " + response_del.ReasonPhrase);
+                        }
+
+                    }
+                }
+            }
+        }
         private async void RemoveExamBTN_Click(object sender, RoutedEventArgs e)
         {
             //remove exam button
@@ -127,6 +170,8 @@ namespace FinalProject.Demos
             //send with exists teacher exam
             if (exam != null)
             {
+                DeleteQuestions();
+                DeleteExamData();
                 var response_del = await client.DeleteAsync(url + "/" + exam.Id);
                 var result = response_del.IsSuccessStatusCode;
                 if (!result)
@@ -135,6 +180,7 @@ namespace FinalProject.Demos
                 }
                 ExamsCombo.Items.Remove(exam.Name);
                 teacherExams.Remove(exam);
+                //delete relative questions from data base
             }
         }
 
@@ -144,10 +190,12 @@ namespace FinalProject.Demos
             //need to finish not ready!
             //ExamsCombo.Items
             //List<ExamData> data = new List<ExamData>();
+            Statlbl.Content = "";
             submitLbl.Content = "";
             maxGradeLbl.Content = "";
             minGradeLbl.Content = "";
             aveGradeLbl.Content = "";
+            dataGrid.Visibility = Visibility.Collapsed;
             int subAmount = 0;
             float maxG=0, minG=200, ave=0;
             StudentsData sData = new StudentsData();

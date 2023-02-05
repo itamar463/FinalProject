@@ -26,7 +26,7 @@ namespace FinalProject.Server.API.Models
         public float Weight { get; set; }
         public string ExamId { get; set; }
         public int QuestionNumber { get; set; }
-
+        public byte[] ImageData { get; set; }
 
         public Question() : this(false, "",-1,-1,"")
         {

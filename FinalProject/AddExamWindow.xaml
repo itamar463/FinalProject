@@ -22,9 +22,9 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <StackPanel Margin="3 5 6 0" Orientation="Horizontal" Height="46">
                 <Label Content="Enter question here:"></Label>
-                <TextBox Name="QuestionTXT" Width="234" ></TextBox>
-                <CheckBox Name="IsImageQuestion" Margin="5 5 0 0" Height="20" Checked="IsImageQuestion_Checked"></CheckBox>
-                <Label Content="Image Question" Height="29"/>
+                <TextBox Name="QuestionTXT" Width="234" Visibility="Visible"></TextBox>
+                <Label Name="imgLbl" Width="234" Visibility="Collapsed"></Label>
+                <Button x:Name="imgBtn" Content="Browse Question" Height="29" Margin="5,0,0,0" Click="imgBtn_Click"/>
             </StackPanel>
             <Label Content="Enter question relative weight:"></Label>
             <TextBox Name="QuestionWeight" Width="234" Height="30" ></TextBox>

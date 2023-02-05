@@ -24,6 +24,8 @@ using System.Threading;
 using Azure;
 using System.Collections;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using Microsoft.Win32;
+using System.IO;
 
 namespace FinalProject.Demos
 {
@@ -36,6 +38,10 @@ namespace FinalProject.Demos
         private Exam exam;
         private HttpClient client;
         private string url = "https://localhost:7277/api/Questions";
+        private string filePath = ""; //for image question new!!!
+        private byte[]? imgData = null; //added
+       // private BitmapImage bitmapImage; //added
+        private Image imageShow;
         
         public AddExamWindow(Exam exam)
         {
@@ -44,6 +50,8 @@ namespace FinalProject.Demos
             this.exam = exam;
             helloLbl.Content += exam.Name;
             client = new HttpClient();
+            //bitmapImage = new BitmapImage();
+            imageShow = new Image();
             GetQuestions();
         }
 
@@ -104,7 +112,22 @@ namespace FinalProject.Demos
             bool is_pressed = false;
             //check question content is not empty
             question.QuestionContent = QuestionTXT.Text;
-            if (question.QuestionContent == "")
+            if (question.QuestionContent != "" || imgData != null)
+            {
+                //new!!!
+                if (imgData != null)
+                {
+                    question.ImageData = imgData;
+                    question.QuestionContent = filePath;
+                    question.IsImage = true;
+                }
+                else
+                {
+                    question.IsImage = false;
+                    question.ImageData = new byte[] {0x00};
+                }
+            }
+            else
             {
                 MessageBox.Show("Fill question content.");
                 return;
@@ -139,7 +162,7 @@ namespace FinalProject.Demos
                 return;
             }
 
-            question.IsImage = (bool)IsImageQuestion.IsChecked; //need to hendle some point
+            //question.IsImage = (bool)IsImageQuestion.IsChecked; //need to hendle some point, maybe dont need it
 
             if ((bool)IsCorrectAnswer1.IsChecked)
             {
@@ -216,6 +239,11 @@ namespace FinalProject.Demos
 
             Answer4TXT.Text = "";
 
+            imgData = null;
+
+            imgLbl.Visibility = Visibility.Collapsed;
+            QuestionTXT.Visibility = Visibility.Visible;
+
             switch (question.CorrectAnswer)
             {
                 case 1:
@@ -241,6 +269,15 @@ namespace FinalProject.Demos
             {
 
                 QuestionTXT.Text = q.QuestionContent;
+                if (q.IsImage)
+                {
+                    ShowImageQuestion(q.ImageData);
+                }
+                else
+                {
+                    imgLbl.Visibility = Visibility.Collapsed;
+                    QuestionTXT.Visibility = Visibility.Visible;
+                }
 
                 QuestionWeight.Text = q.Weight.ToString();
 
@@ -357,7 +394,6 @@ namespace FinalProject.Demos
                 {
                     MixAnswers(question);
                     question.QuestionNumber = i;
-                    
                     i++;
                 }
                 
@@ -394,7 +430,21 @@ namespace FinalProject.Demos
                 bool is_pressed = false;
 
                 question.QuestionContent = QuestionTXT.Text;
-                if (question.QuestionContent == "")
+                if (question.QuestionContent != "" || imgData != null)
+                {
+                    if (imgData != null)
+                    {
+                        question.ImageData = imgData;
+                        question.QuestionContent = filePath;
+                        question.IsImage = true;
+                    }
+                    else
+                    {
+                        question.IsImage = false;
+                        question.ImageData = new byte[] { 0x00 };
+                    }
+                }
+                else
                 {
                     MessageBox.Show("Fill question content.");
                     return;
@@ -423,7 +473,7 @@ namespace FinalProject.Demos
                     return;
                 }
                 //need to get to the grade himself
-                question.IsImage = (bool)IsImageQuestion.IsChecked; //need to hendle some point
+                
 
                 if ((bool)IsCorrectAnswer1.IsChecked)
                 {
@@ -493,6 +543,11 @@ namespace FinalProject.Demos
 
                 Answer4TXT.Text = "";
 
+                imgData = null;
+
+                imgLbl.Visibility = Visibility.Collapsed;
+                QuestionTXT.Visibility = Visibility.Visible;
+
                 switch (question.CorrectAnswer)
                 {
                     case 1:
@@ -511,10 +566,6 @@ namespace FinalProject.Demos
                         break;
                 }
             }
-
-        }
-        private void IsImageQuestion_Checked(object sender, RoutedEventArgs e)
-        {
 
         }
 
@@ -536,6 +587,43 @@ namespace FinalProject.Demos
         private void IsCorrectAnswer4_Checked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void imgBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                filePath = openFileDialog.FileName;
+                imgData = File.ReadAllBytes(filePath);
+                ShowImageQuestion(imgData);
+                // Use HTTP Client to send image data to the ASP.NET API for storage in the SQL Server database.
+            }
+        }
+
+        private void ShowImageQuestion(byte[] image)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            using (MemoryStream memory = new MemoryStream(image))
+            {
+                memory.Position = 0;
+                bitmapImage.BeginInit();
+                bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.UriSource = null;
+                bitmapImage.StreamSource = memory;
+                bitmapImage.DecodePixelHeight = 40;
+                bitmapImage.DecodePixelWidth = 230;
+                bitmapImage.EndInit();
+            }
+
+            imageShow.Source = bitmapImage;
+            imageShow.Width = 230;
+            imageShow.Height = 40;
+            imgLbl.Content = imageShow;
+            imgLbl.Visibility = Visibility.Visible;
+            QuestionTXT.Visibility = Visibility.Collapsed;
         }
     }
 }

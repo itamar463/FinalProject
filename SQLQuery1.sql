@@ -1,1 +1,1 @@
-﻿select * from Exams 
+﻿delete from Questions

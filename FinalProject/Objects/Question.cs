@@ -34,7 +34,8 @@ namespace FinalProject.Demos.Objects
         public int CorrectAnswer { get; set; }
         [JsonPropertyName("questionNumber")]
         public int QuestionNumber { get; set; }
-
+        [JsonPropertyName("imageData")]
+        public byte[] ImageData { get; set; }
 
         public Question() : this(false, "", -1, -1, "")
         {
