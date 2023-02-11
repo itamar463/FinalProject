@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Demos.Objects
 {
+    // Base class for one question
     public class Question
     {
         [JsonPropertyName ("id")]

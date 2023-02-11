@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Server.API.Context;
 using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Controllers
 {
+    //This class will handle all types of calls to the exam data table
+
     [Route("api/[controller]")]
     [ApiController]
     public class ExamDatasController : ControllerBase

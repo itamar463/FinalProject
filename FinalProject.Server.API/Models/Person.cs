@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
@@ -50,6 +45,5 @@ namespace FinalProject.Server.API.Models
         {
             return this.Name;
         }
-
     }
 }

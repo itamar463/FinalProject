@@ -1,22 +1,15 @@
 ﻿using FinalProject.Demos.Objects;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FinalProject.Demos
 {
+    //This window handles the addition or update of an exam in terms of the exam details (date, time, etc) to add or update
+    // (will either display an empty template to fill with the exam details,
+    // or one with an exam's details available to be edited - 
+    // depends on the usage of the window
     public partial class ExamDetailsWindow : Window
     {
         private Teacher teacher;
@@ -64,7 +57,8 @@ namespace FinalProject.Demos
         }
         private async void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            //add exam going to add questions
+            //clicking on the add questions button will first lead to a validation of the inital details entered for the test on this window
+            // if everything is valid - will forward us to the AddExamWindow, else - messages will be displayed accordingly.
             exam.Name = examNameTxt.Text;
             if(exam.Name == "")
             {

@@ -10,6 +10,8 @@ using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Controllers
 {
+    //This class will handle all types of calls to the users (students and teachers) data table
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -18,16 +20,8 @@ namespace FinalProject.Server.API.Controllers
 
         public UsersController(UsersContext context)
         {
-            //Student s1 = new Student("DonaldDuck", 60, "Computer Science", "1234", false);
-            //Student s2 = new Student("MickyMouse", 30, "Computer Science", "1234", false);
-            //Teacher t1 = new Teacher("Donald", 60, "Computer Science", "1234", true);
-            //Teacher t2 = new Teacher("Micky", 30, "Computer Science", "1234", true);
-            _context = context;
-            //_context.Users.Add(s1);
-            //_context.Users.Add(s2);
-            //_context.Users.Add(t1);
-            //_context.Users.Add(t2);
-            _context.Seed();
+          _context = context;
+          _context.Seed();
 
         }
 

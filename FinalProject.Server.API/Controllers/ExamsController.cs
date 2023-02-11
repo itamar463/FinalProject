@@ -10,6 +10,8 @@ using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Controllers
 {
+    //This class will handle all types of calls to the exams table
+
     [Route("api/[controller]")]
     [ApiController]
     public class ExamsController : ControllerBase

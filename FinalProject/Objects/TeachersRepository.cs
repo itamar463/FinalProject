@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Demos.Objects
 {
+    //This class handles the list of teachers, and it's structure is mainly inharited from IPersonRepository Interface
+
     public class TeachersRepository : IPersonsReposetory
     {
         //data handling for students need to see how it works with db and so on...

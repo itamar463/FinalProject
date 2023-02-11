@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalProject.Server.API.Models;
+﻿using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Repositories
 {
@@ -13,13 +8,12 @@ namespace FinalProject.Server.API.Repositories
         List<Teacher> teachers;
         static private TeachersRepository _instance = null;
 
-        //01 change to private
         private TeachersRepository()
         {
             teachers = new List<Teacher>();
         }
 
-        //03 Get Factory Of TeachersRepository  as singelton
+        //Get Factory Of TeachersRepository  as singelton
 
         public static TeachersRepository Instance
         {
@@ -34,7 +28,6 @@ namespace FinalProject.Server.API.Repositories
             }
         }
 
-
         Person[] IPersonsReposetory.Persons => teachers.ToArray();
 
 
@@ -42,7 +35,6 @@ namespace FinalProject.Server.API.Repositories
         {
             if (person is Teacher)
             {
-
                 teachers.Add((Teacher)person);
             }
         }
@@ -68,7 +60,6 @@ namespace FinalProject.Server.API.Repositories
             if (indexFound >= 0)
             {
                 this.teachers[indexFound] = t;
-
             }
         }
     }

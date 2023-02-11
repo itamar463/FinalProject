@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalProject.Server.API.Models;
+﻿using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Repositories
 {
@@ -13,8 +8,7 @@ namespace FinalProject.Server.API.Repositories
         void AddPerson(Person person);
         void UpdatePerson(Person person);
         void RemovePerson(string id);
-        //string LoadAllStudents();
-        //void SaveAllStudents();
+
         Person[] Persons { get; }
 
         void SearchExamByName(string examName);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Demos.Objects
 {
+    //This class handles the list of students, and it's structure is mainly inharited from IPersonRepository Interface
     public class StudentsRepository : IPersonsReposetory
     {
         //data handling for students need to see how it works with db and so on...
@@ -15,7 +16,6 @@ namespace FinalProject.Demos.Objects
         static private StudentsRepository _instance = null;
         HttpClient clientApi;
 
-        //01 change to private
         private StudentsRepository()
         {
             _students = new List<Student>();
@@ -23,7 +23,7 @@ namespace FinalProject.Demos.Objects
             clientApi.BaseAddress = new Uri("https://localhost:7277");
         }
 
-        //03 Get Factory Of StudentsRepository  as singelton
+        //Get Factory Of StudentsRepository  as singelton
 
         public static StudentsRepository Instance
         {
@@ -40,7 +40,6 @@ namespace FinalProject.Demos.Objects
         public List<Student> GetStudents()
         {
             var response = clientApi?.GetAsync("api/users").Result;
-            //  response.EnsureSuccessStatusCode();
             string? dataString = response?.Content.ReadAsStringAsync().Result;
             List<Person>? persons = JsonSerializer.Deserialize<List<Person>>(dataString);
             List<Student> load_students = new List<Student>();
@@ -58,9 +57,9 @@ namespace FinalProject.Demos.Objects
                     load_students.Add(student);
                 }
             }
-            //var load_students = JsonSerializer.Deserialize<List<Student>>(dataString);
             return load_students;
         }
+
         public Student[] Students
         {
             get
@@ -73,7 +72,6 @@ namespace FinalProject.Demos.Objects
 
         }
        
-
         public void AddPerson(Person person)
         {
             if (person is Student)
@@ -81,10 +79,8 @@ namespace FinalProject.Demos.Objects
                 Student student = (Student)person;
                 this._students.Add(student);
             }
-
         }
-
-
+        
         public void RemovePerson(string id)
         {
             int indexFound = this._students.FindIndex(s => s.Id == id);

@@ -36,7 +36,6 @@ namespace FinalProject.Server.API.Models
         {
             IsImage = isImage;
             QuestionContent = questionContent;
-           // Answers = answers;
             Weight = weight;
             QuestionNumber = questionNumber;
             ExamId = exmaid;

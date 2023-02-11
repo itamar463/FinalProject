@@ -12,8 +12,6 @@ namespace FinalProject.Demos.Objects
             void AddPerson(Person person);
             void UpdatePerson(Person person);
             void RemovePerson(string id);
-            //string LoadAllStudents();
-            //void SaveAllStudents();
             
 
             void SearchExamByName(string examName);

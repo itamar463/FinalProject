@@ -5,28 +5,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using JsonSerializer = System.Text.Json.JsonSerializer;
-using System.Drawing;
-using static System.Net.Mime.MediaTypeNames;
 using Image = System.Windows.Controls.Image;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace FinalProject.Demos
 {
-    
+    // This window will show the test on the student's end,
+    // i.e when a student takes a test, this will be handled by this window
     public partial class ExamStudentWindow : Window
     {
         private Student student;
@@ -34,9 +25,9 @@ namespace FinalProject.Demos
         HttpClient client;
         private List<Question> questions;
         private static int curr_question = 0;
-        private Dictionary<string, List<bool>> answers;
-        private DispatcherTimer timer;
-        private TimeSpan remainingTime;
+        private Dictionary<string, List<bool>> answers; //will store each questions and the value of each answer entered by the student (true if the student chose the answer as the correct one, all others will be defaultly false)
+        private DispatcherTimer timer; 
+        private TimeSpan remainingTime;// will display at each second the time left for the exam to end
         private ExamData? examData;
         private static float percentage = 0;
         private string url = "https://localhost:7277/api/ExamDatas";
@@ -44,6 +35,7 @@ namespace FinalProject.Demos
         {
             InitializeComponent();
         }
+
         public ExamStudentWindow(Student student, Exam exam)
         {
             InitializeComponent();
@@ -72,6 +64,8 @@ namespace FinalProject.Demos
             examData.QuestionCount = questions.Count;
         }
 
+        // will handle the job of the timer. When the time ends - the window will simply close
+        // also, we put here a listener to the exam's progress bar for it to be updated accordingly to the exam's progress
         void Timer_Tick(object sender, EventArgs e)
         {
             remainingTime = remainingTime.Subtract(TimeSpan.FromSeconds(1));
@@ -120,11 +114,12 @@ namespace FinalProject.Demos
                 QuestionsLST.Items.Refresh();
             }
         }
+        
+        //Will handle image-type questions and have them shown properly
         private void ImageContent(Question q)
         {
             Image imageControl = new Image();
             BitmapImage bitmapimage = new BitmapImage();
-            //byte[] b = Encoding.ASCII.GetBytes(questions[0].QuestionContent);
             using (MemoryStream memory = new MemoryStream(q.ImageData))
             {
                 memory.Position = 0;
@@ -146,10 +141,10 @@ namespace FinalProject.Demos
             QuestionLbl.Visibility = Visibility.Collapsed;
             QuestionImgLbl.Visibility = Visibility.Visible;
         }
+        
+        //Will initialize the time and load all the data to it's place on the window
         private void startExam()
         {
-            //Clayton Fellin
-            //need timer for test remaning time
             if (questions.Count > 0)
             {
                 QuestionNumberLbl.Content = "Question Number: " +  questions[0].QuestionNumber.ToString();
@@ -175,7 +170,8 @@ namespace FinalProject.Demos
             }
             
         }
-
+        
+        // will load already answered questions with the student's choice when going back to answered questions in the test
         private void CheckedAnswers(string q_content)
         {
             List<bool> checkBoxes = answers[q_content];
@@ -205,6 +201,7 @@ namespace FinalProject.Demos
             else IsCorrectAnswer4.IsChecked = false;
         }
         
+        //Calculate a student's final grade in the exam
         private void CalculateGrade()
         {
             foreach (var item in questions)
@@ -244,7 +241,7 @@ namespace FinalProject.Demos
                 }
                 if (!isAnswerd)
                 {
-                    //if didn't answerd the question giving 0 as picked answer
+                    //if the student didn't answer the question, will give 0 as picked answer
                     examData.QuestionDetails += "0^^^";
                     
                 }
@@ -263,9 +260,12 @@ namespace FinalProject.Demos
                 MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
                 return;
             }
-        }
+     }
+     
         private async void FinishExamBTN_Click(object sender, RoutedEventArgs e)
-        {
+        { 
+            // When the finish exam button is pressed, we'll get here -
+            // If not all the questions were answered, we will make sure with the student whether he'd really like to exit the test
             foreach (KeyValuePair<string, List<bool>> item in answers)
             {
                 if (item.Value.FindAll(x => x == true).Count == 0)
@@ -286,7 +286,7 @@ namespace FinalProject.Demos
             SubmitExam();
             this.Close();
         }
-
+        // will move to the exam's previous question and load it's data
         private void PrevBtn_Click(object sender, RoutedEventArgs e)
         {
             curr_question--;
@@ -310,6 +310,7 @@ namespace FinalProject.Demos
             
         }
 
+        // will move to the exam's next question and load it's data
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
             curr_question++;
@@ -333,6 +334,7 @@ namespace FinalProject.Demos
             
         }
 
+        // moving between questions in the time of the exam using the listbox (updating the questions data accordingly)
         private void QuestionsLST_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // questions list box
@@ -359,6 +361,7 @@ namespace FinalProject.Demos
             }
         }
         
+        // if the 1st checkbox was checked - 
         private void IsCorrectAnswer1_Checked(object sender, RoutedEventArgs e)
         {
             IsCorrectAnswer1.Unchecked += IsCorrectAnswer1_Unchecked;
@@ -369,12 +372,12 @@ namespace FinalProject.Demos
                     answers[QuestionLbl.Content.ToString()][0] = true;
                     
                 }
-                
-                
 
             }
             
         }
+        // if the 1st checkbox was unchecked - 
+
         private void IsCorrectAnswer1_Unchecked(object sender, RoutedEventArgs e)
         {
             if (QuestionLbl.Content != "")
@@ -385,7 +388,8 @@ namespace FinalProject.Demos
             }
 
         }
-
+        
+        // if the 2nd checkbox was checked - 
         private void IsCorrectAnswer2_Checked(object sender, RoutedEventArgs e)
         {
             IsCorrectAnswer2.Unchecked += IsCorrectAnswer2_Unchecked;
@@ -399,6 +403,8 @@ namespace FinalProject.Demos
                 
             }
         }
+
+        // if the 2nd checkbox was unchecked - 
         private void IsCorrectAnswer2_Unchecked(object sender, RoutedEventArgs e)
         {
             if (QuestionLbl.Content != "")
@@ -409,6 +415,7 @@ namespace FinalProject.Demos
 
         }
 
+        // if the 3rd checkbox was checked - 
         private void IsCorrectAnswer3_Checked(object sender, RoutedEventArgs e)
         {
 
@@ -424,6 +431,8 @@ namespace FinalProject.Demos
                 
             }
         }
+
+        // if the 3rd checkbox was unchecked - 
         private void IsCorrectAnswer3_Unchecked(object sender, RoutedEventArgs e)
         {
             if (QuestionLbl.Content != "")
@@ -434,6 +443,8 @@ namespace FinalProject.Demos
             }
 
         }
+
+        // if the 4th checkbox was checked - 
         private void IsCorrectAnswer4_Checked(object sender, RoutedEventArgs e)
         {
 
@@ -448,6 +459,8 @@ namespace FinalProject.Demos
                 
             }
         }
+
+        // if the 4th checkbox was unchecked - 
         private void IsCorrectAnswer4_Unchecked(object sender, RoutedEventArgs e)
         {
             if (QuestionLbl.Content != "")
@@ -460,6 +473,7 @@ namespace FinalProject.Demos
 
         }
 
+        //updating the progress bar value
         private void progBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             progBar.Value = (int)e.NewValue;

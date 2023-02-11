@@ -1,28 +1,17 @@
 ﻿using FinalProject.Demos.Objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FinalProject.Demos
 {
-    /// <summary>
-    /// Interaction logic for StudentWindow.xaml
-    /// </summary>
+
     public partial class StudentWindow : Window
     {
-        private StudentsRepository repo;
+        //This window will be the one a student will be directed to after logging in
+        // in here we will load all the exam data and allow the student to enter an exam key and test it (if the exam is at all relevant) 
         private HttpClient client;
         private Student stud;
         private string url = "https://localhost:7277/api/Exams";
@@ -32,6 +21,7 @@ namespace FinalProject.Demos
             InitializeComponent();
         }
 
+        //loading all exams
         private async void GetExams()
         {
             var response = client?.GetAsync(url).Result;
@@ -39,16 +29,17 @@ namespace FinalProject.Demos
             this.exams = JsonSerializer.Deserialize<List<Exam>>(dataString);
             
         }  
+
         public StudentWindow(StudentsRepository repo, Student s)
         {
             InitializeComponent();
-            this.repo = repo;
             this.stud = s;
             StudentLbl.Content += stud.Name;
             client = new HttpClient();
             GetExams();
         }
 
+        //Will check if the exam entered by the student was already done by him 
         private bool checkIfDidExam(string examId)
         {
             var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
@@ -94,15 +85,12 @@ namespace FinalProject.Demos
                             {
                                 MessageBox.Show("You allready did the exam!");
                                 this.Close();
-                                return;
-                                
+                                return;                          
                             }
-                            
                         }
-                        
                     }
                 }
-                MessageBox.Show("Exam didn't found.");
+                MessageBox.Show("Exam wasn't found.");
             }
         }
     }

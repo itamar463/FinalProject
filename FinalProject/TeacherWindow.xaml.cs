@@ -1,24 +1,11 @@
 ﻿using FinalProject.Demos.Objects;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.NetworkInformation;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace FinalProject.Demos
 {
@@ -29,7 +16,7 @@ namespace FinalProject.Demos
 
         private Teacher teach;
 
-        private Exam exam; //for new exam to create
+        private Exam exam; //for a new exam be to created
 
         private List<Exam> teacherExams;
 
@@ -39,19 +26,22 @@ namespace FinalProject.Demos
 
         private string url = "https://localhost:7277/api/Exams";
 
-        
+        // The teacher window will display all of his exams and their statistics (if they were already solved by students) 
+        // also, it will allow the addition of new exams, the update of existing ones and also their removal
+     
         public TeacherWindow()
         {
             InitializeComponent();
-            
         }
 
         private void getExamData()
         {
+            //loading the data of already solved exams 
             var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
             string? dataString = response?.Content.ReadAsStringAsync().Result;
             examsInfo = JsonSerializer.Deserialize<List<ExamData>>(dataString);
         }
+
         private void GetExams()
         {
             //add to combobox and teacher exmas list all the relative exams from DB
@@ -111,7 +101,7 @@ namespace FinalProject.Demos
         }
 
         
-
+        // will open the examDetailsWindow with no filled textboxes
         private void AddExamBTN_Click(object sender, RoutedEventArgs e)
         {
             //adding new exam
@@ -119,6 +109,8 @@ namespace FinalProject.Demos
             w.ShowDialog();
             GetExams();
         }
+
+        //will remove all questions of a given exam (used when an exam is being deleted)
         private async void DeleteQuestions()
         {
             var response = client?.GetAsync("https://localhost:7277/api/Questions").Result;
@@ -136,11 +128,12 @@ namespace FinalProject.Demos
                         {
                             MessageBox.Show("Error Code" + response_del.StatusCode + " : Message - " + response_del.ReasonPhrase);
                         }
-
                     }
                 }
             }
         }
+
+        //will remove an exam's statistics (will be used when deleting an exam and if it was already solved)
         private async void DeleteExamData()
         {
             var response = client?.GetAsync("https://localhost:7277/api/ExamDatas").Result;
@@ -158,11 +151,11 @@ namespace FinalProject.Demos
                         {
                             MessageBox.Show("Error Code" + response_del.StatusCode + " : Message - " + response_del.ReasonPhrase);
                         }
-
                     }
                 }
             }
         }
+
         private async void RemoveExamBTN_Click(object sender, RoutedEventArgs e)
         {
             //remove exam button
@@ -190,16 +183,13 @@ namespace FinalProject.Demos
                 }
                 ExamsCombo.Items.Remove(exam.Name);
                 teacherExams.Remove(exam);
-                //delete relative questions from data base
             }
         }
 
-        
+        // will handle moving between tests using the exams listbox
         private void ExamsCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //need to finish not ready!
-            //ExamsCombo.Items
-            //List<ExamData> data = new List<ExamData>();
+            //TODO: need to finish not ready! - Pretty sure we're done here, but keeping this note to make sure with Itush
             Statlbl.Content = "";
             submitLbl.Content = "";
             maxGradeLbl.Content = "";
@@ -222,9 +212,6 @@ namespace FinalProject.Demos
                         if (maxG < item.Grade) maxG = item.Grade;
                         ave += item.Grade;
                         subAmount++;
-                        
-
-
                     }
                 }
                 submitLbl.Content += "Submits amount: " + subAmount.ToString();
@@ -242,35 +229,11 @@ namespace FinalProject.Demos
                     minGradeLbl.Content += "Min grade: 0";
                 }
                 dataGrid.Visibility = Visibility.Visible;
-
-                // var check = sData.Grades.SelectMany(x => x.Value.Select(y => new { Key = x.Key, Value = y }));
-                //dataGrid.ItemsSource = sData.Grades.SelectMany(x => x.Value.Select(y => new { Key = x.Key, Value = y }));
                 dataGrid.ItemsSource = sData.Grades;
-  
-                
-                //foreach (var item in sData.StudentsAnswers)
-                //{
-                //    int i = 1;
-                //    foreach (var answer in item.Value)
-                //    {
-                //        string Val = answer.ToString();
-                //        DataGridTextColumn column = new DataGridTextColumn();
-                //        column.Header = "Question " + i.ToString();
-                //        column.Binding = new Binding("Val");
-                //        dataGrid.Columns.Add(column);
-                //        i++;
-                //    }
-                //}
-                //if (sData != null) dataGrid.ItemsSource = sData.Grades;
-
-                //need to iterate the questions string in each item in data
-                //DataGridTextColumn column = new DataGridTextColumn();
-                //column.Header = "Column Name";
-                //column.Binding = new Binding("PropertyName");
-                //dataGrid.Columns.Add(column);
-
             }
         }
+
+        // will get an exam's statistics from the DB and display them
         private void GetQuestionsData(StudentsData data)
         {
             Exam? examStat = teacherExams.Find(i => i.Name == ExamsCombo.SelectedItem);
@@ -288,7 +251,7 @@ namespace FinalProject.Demos
                         foreach (var question in questions)
                         {
                             List<string> details = question.Split("^^^").ToList();
-                            
+
                             if (!data.StudentsAnswers.ContainsKey(item.StudentName))
                             {
                                 data.StudentsAnswers.Add(item.StudentName, new List<bool>());
@@ -300,19 +263,15 @@ namespace FinalProject.Demos
                                 if (details[1] == details[2]) data.StudentsAnswers[item.StudentName].Add(true);
                                 else data.StudentsAnswers[item.StudentName].Add(false);
                             }
-                            
-
                         }
-
-
                     }
                 }
-
             }
         }
+
+        //StudentsData is a sub-class that holds on the details of an answered exam to calcuate the statistics later
         public class StudentsData
         {
-            //public string ExamName { get; set; }
             public Dictionary<string,string> Grades { get; set; }
 
             

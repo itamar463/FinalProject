@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Demos.Objects
 {
+    /*This class holds on to a student's results pf a certain test.
+     * this information will be used to calculate a test's statistics*/
     public class ExamData
     {
         [JsonPropertyName("id")]

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Server.API.Context;
 using FinalProject.Server.API.Models;
-using System.Text;
 
 namespace FinalProject.Server.API.Controllers
 {
+    //This class will handle all types of calls to the questions data table
+
     [Route("api/[controller]")]
     [ApiController]
     public class QuestionsController : ControllerBase
@@ -77,19 +73,6 @@ namespace FinalProject.Server.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Question>> PostQuestion(Question question)
         {
-            //if (question.IsImage)
-            //{
-            //    byte[] imageData;
-            //    byte[] stringBytes = Encoding.ASCII.GetBytes(question.QuestionContent);
-            //    using (var stream = new MemoryStream(stringBytes))
-            //    {
-            //        using (var binaryReader = new BinaryReader(stream))
-            //        {
-            //            imageData = binaryReader.ReadBytes((int)stream.Length);
-            //        }
-            //    }
-            //    question.QuestionContent = Encoding.ASCII.GetString(imageData);
-            //}
             _context.Questions.Add(question);
             await _context.SaveChangesAsync();
 

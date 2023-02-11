@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalProject.Server.API.Models;
-using FinalProject.Server.API.Controllers;
+﻿using FinalProject.Server.API.Models;
 
 namespace FinalProject.Server.API.Repositories
 {
@@ -14,13 +8,12 @@ namespace FinalProject.Server.API.Repositories
         private List<Student> _students;
         static private StudentsRepository _instance = null;
 
-        //01 change to private
         private StudentsRepository()
         {
             _students = new List<Student>();
         }
 
-        //03 Get Factory Of StudentsRepository  as singelton
+        //Get Factory Of StudentsRepository  as singelton
 
         public static StudentsRepository Instance
         {
@@ -47,7 +40,6 @@ namespace FinalProject.Server.API.Repositories
 
         }
 
-
         public void RemovePerson(string id)
         {
             int indexFound = this._students.FindIndex(s => s.Id == id);
@@ -69,7 +61,6 @@ namespace FinalProject.Server.API.Repositories
             if (indexFound >= 0)
             {
                 this._students[indexFound] = st;
-
             }
         }
     }

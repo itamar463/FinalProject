@@ -1,9 +1,9 @@
 ﻿using FinalProject.Server.API.Models;
-using Microsoft.EntityFrameworkCore.Storage;
 using RandomNameGeneratorNG;
 
 namespace FinalProject.Server.API.Context
 {
+    //This class creates and enters person-type (both teacher and student) users to the DB
     public static class InsertUsers
     {
         public static void Seed(this UsersContext dbContext)
@@ -12,7 +12,8 @@ namespace FinalProject.Server.API.Context
             if (!dbContext.Users.Any())
             {
                 Random rand = new Random();
-                List<string> Fac = new List<string> { "Computer Science", "Philosophy","Economy","Social Work" };
+               //TODO: is this relevant?
+               //List<string> Fac = new List<string> { "Computer Science", "Philosophy","Economy","Social Work" };
                 var PersonGenerator = new PersonNameGenerator();
                 for(int i=1; i < 5; ++i)
                 {
@@ -52,9 +53,6 @@ namespace FinalProject.Server.API.Context
                         Password = "456" + i.ToString(),
                         IsTeacher = false
                     });
-
-
-
                 }
                 dbContext.SaveChanges();
             }

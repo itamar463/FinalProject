@@ -1,35 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using FinalProject.Demos.Objects;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using Newtonsoft.Json;
-using System.Windows.Markup;
-using System.Threading;
-using Azure;
-using System.Collections;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using Microsoft.Win32;
 using System.IO;
 
 namespace FinalProject.Demos
 {
-    
+    //This window handles the addition or update of an exam in terms of question to add or update
+    // (will either display an empty template to fill with questions,
+    // or one with an exam's details available to be edited - 
+    // depends on the usage of the window
     public partial class AddExamWindow : Window
     {
         private float pointToGrade = 0; // check if enough points to set the full grade for the exam
@@ -51,13 +39,12 @@ namespace FinalProject.Demos
             this.exam = exam;
             helloLbl.Content += exam.Name;
             client = new HttpClient();
-            //bitmapImage = new BitmapImage();
             imageShow = new Image();
             isAnswerRand = isArand;
             GetQuestions();
         }
 
-        //GetQuestions: if the exam is need update, takes the relative questions from data base
+        //GetQuestions: if the exam is needs an update, it will take the relative questions from the DB
         private void GetQuestions()
         {
             
@@ -81,7 +68,7 @@ namespace FinalProject.Demos
                 QuestionsLST.Items.Refresh();
             }
         }
-        //RemoveBtn_Click: remove selected question from exam(selected from listbox)
+        //RemoveBtn_Click: remove selected question from the exam selected from the listbox
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
         {
             
@@ -116,7 +103,6 @@ namespace FinalProject.Demos
             question.QuestionContent = QuestionTXT.Text;
             if (question.QuestionContent != "" || imgData != null)
             {
-                //new!!!
                 if (imgData != null)
                 {
                     question.ImageData = imgData;
@@ -136,7 +122,7 @@ namespace FinalProject.Demos
             }
             try
             {
-                //check question weight is valid and not empty
+                //will check if a question's weight is valid and not empty
                 if (QuestionWeight.Text != "")
                 {
                     question.Weight = float.Parse(QuestionWeight.Text);
@@ -157,14 +143,14 @@ namespace FinalProject.Demos
                 MessageBox.Show("Fill with positive number.");
                 return;
             }
-            //check if there is not to many points relative to exam grade(in total)
+            //will check if there are not too many points relatively to the exam's grade in total
             if (pointToGrade > exam.Grade)
             {
                 MessageBox.Show("To many points for the exam: " + pointToGrade.ToString());
                 return;
             }
-
-            //question.IsImage = (bool)IsImageQuestion.IsChecked; //need to hendle some point, maybe dont need it
+            //TODO: need to hendle some point, maybe dont need it
+            //question.IsImage = (bool)IsImageQuestion.IsChecked;
 
             if ((bool)IsCorrectAnswer1.IsChecked)
             {

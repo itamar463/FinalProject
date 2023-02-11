@@ -26,7 +26,6 @@ namespace FinalProject.Server.API.Models
         }
         public ExamData(string studentId, string studentName, string examId, float grade, string questionDetails, int questionCount)
         {
-            
             StudentId = studentId;
             StudentName = studentName;
             ExamId = examId;

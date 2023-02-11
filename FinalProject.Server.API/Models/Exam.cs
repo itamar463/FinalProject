@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalProject.Server.API.Models
 {
@@ -19,9 +14,8 @@ namespace FinalProject.Server.API.Models
         public DateTime EndDate { get; set; }
         public string TeacherId { get; set; }
         public float Totaltime { get; set; }
-        public bool IsRandomize { get; set; } //maybe we don't need it?
-        //public List<Question> Questions { get; set; }
-        public float Grade { get; set; } //maybe change to max_grade
+        public bool IsRandomize { get; set; }
+        public float Grade { get; set; }
 
 
         public Exam() : this("","", DateTime.Now,DateTime.Now,new Teacher(),-1,false,-1)
@@ -31,13 +25,11 @@ namespace FinalProject.Server.API.Models
         public Exam(string name, string id, DateTime stratDate, DateTime endDate, Teacher teacher, float totaltime, bool isRandomize, float grade)
         {
             Name = name;
-           // Id = Guid.NewGuid().ToString(); ;
             StratDate = stratDate;
             EndDate = endDate;
             TeacherId = teacher.Id;
             Totaltime = totaltime;
             IsRandomize = isRandomize;
-            //Questions = questions;
             Grade = grade;
         }
         public void mixQuestions()
@@ -45,8 +37,6 @@ namespace FinalProject.Server.API.Models
             if (IsRandomize)
             {
                 Random rand = new Random();
-                //var shuffled = Questions.OrderBy(_ => rand.Next()).ToList();
-                //this.Questions = shuffled;
             }
         }
     }
